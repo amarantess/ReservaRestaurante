@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\ReservaRestaurante.Communication\ReservaRestaurante.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\ReservaRestaurante.Exceptions\ReservaRestaurante.Exceptions.csproj" />
+    <ProjectReference Include="..\ReservaRestaurante.Domain\ReservaRestaurante.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

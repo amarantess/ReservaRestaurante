@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Shared\ReservaRestaurante.Communication\ReservaRestaurante.Communication.csproj" />
     <ProjectReference Include="..\..\Shared\ReservaRestaurante.Exceptions\ReservaRestaurante.Exceptions.csproj" />
     <ProjectReference Include="..\ReservaRestaurante.Domain\ReservaRestaurante.Domain.csproj" />
+    <ProjectReference Include="..\ReservaRestaurante.Infrastructure\ReservaRestaurante.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using ReservaRestaurante.Application.UseCases.User.Register;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 
@@ -12,9 +13,13 @@ namespace ReservaRestaurante.API.Controllers
 	{
 		[HttpPost("registrar")]
 		[ProducesResponseType(typeof(ResponseRegisteredUser), StatusCodes.Status201Created)]
-		public IActionResult Register(RequestRegisterUser request)
+		public async Task<IActionResult> Register(
+			[FromServices] IRegisterUserUseCase useCase,
+			[FromBody] RequestRegisterUser request)
 		{
-			return Created();
+			var result = await useCase.Execute(request);
+
+			return Created(string.Empty ,result);
 		}
 	}
 }

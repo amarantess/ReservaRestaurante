@@ -17,7 +17,7 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			RuleFor(u => u.Password.Length)
 				.GreaterThanOrEqualTo(6).WithMessage(ResourceMessagesException.PASSWORD_INVALID);
 
-			When(user => string.IsNullOrEmpty(user.Email) == false, () =>
+			When(user => !string.IsNullOrEmpty(user.Email), () =>
 			{
 				RuleFor(u => u.Email)
 				.EmailAddress().WithMessage(ResourceMessagesException.EMAIL_INVALID);

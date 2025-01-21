@@ -14,11 +14,14 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			RuleFor(u => u.Email)
 				.NotEmpty().WithMessage(ResourceMessagesException.EMAIL_EMPTY);
 
-			RuleFor(u => u.Email)
-				.EmailAddress().WithMessage(ResourceMessagesException.EMAIL_INVALID);
-
 			RuleFor(u => u.Password.Length)
-				.GreaterThanOrEqualTo(6).WithMessage(ResourceMessagesException.EMAIL_INVALID);
+				.GreaterThanOrEqualTo(6).WithMessage(ResourceMessagesException.PASSWORD_INVALID);
+
+			When(user => string.IsNullOrEmpty(user.Email) == false, () =>
+			{
+				RuleFor(u => u.Email)
+				.EmailAddress().WithMessage(ResourceMessagesException.EMAIL_INVALID);
+			});
 		}
 	}
 }

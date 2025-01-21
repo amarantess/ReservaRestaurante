@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Test", "tests\Va
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommomTestUtilities", "tests\CommomTestUtilities\CommomTestUtilities.csproj", "{D853B59D-DCF4-4CC8-985A-F4897D66DE44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCases.Test", "tests\UseCases.Test\UseCases.Test.csproj", "{FF7E4E30-A5A1-4C43-B868-0DDBC49953E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{D853B59D-DCF4-4CC8-985A-F4897D66DE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D853B59D-DCF4-4CC8-985A-F4897D66DE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D853B59D-DCF4-4CC8-985A-F4897D66DE44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF7E4E30-A5A1-4C43-B868-0DDBC49953E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF7E4E30-A5A1-4C43-B868-0DDBC49953E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF7E4E30-A5A1-4C43-B868-0DDBC49953E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF7E4E30-A5A1-4C43-B868-0DDBC49953E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,6 @@ Global
 		{5E099D47-4A7A-496A-B51A-52026B8CE966} = {455D97C4-478C-4CD4-9DDA-FC75DAFD18C5}
 		{4158D535-5D76-48F7-B23F-F7693953A2A7} = {06FE43F6-0851-43A1-BB76-DB8CF0C9E42A}
 		{D853B59D-DCF4-4CC8-985A-F4897D66DE44} = {06FE43F6-0851-43A1-BB76-DB8CF0C9E42A}
+		{FF7E4E30-A5A1-4C43-B868-0DDBC49953E8} = {06FE43F6-0851-43A1-BB76-DB8CF0C9E42A}
 	EndGlobalSection
 EndGlobal

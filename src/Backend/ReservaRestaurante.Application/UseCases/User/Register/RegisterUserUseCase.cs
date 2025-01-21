@@ -53,7 +53,7 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 
 			return new ResponseRegisteredUser
 			{
-				Name = request.Name,
+				Name = user.Name,
 			};
 		}
 

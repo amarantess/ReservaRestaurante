@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservaRestaurante.Communic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservaRestaurante.Exceptions", "src\Shared\ReservaRestaurante.Exceptions\ReservaRestaurante.Exceptions.csproj", "{5E099D47-4A7A-496A-B51A-52026B8CE966}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Test", "tests\Validators.Test\Validators.Test.csproj", "{4158D535-5D76-48F7-B23F-F7693953A2A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommomTestUtilities", "tests\CommomTestUtilities\CommomTestUtilities.csproj", "{D853B59D-DCF4-4CC8-985A-F4897D66DE44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,14 @@ Global
 		{5E099D47-4A7A-496A-B51A-52026B8CE966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E099D47-4A7A-496A-B51A-52026B8CE966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E099D47-4A7A-496A-B51A-52026B8CE966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4158D535-5D76-48F7-B23F-F7693953A2A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4158D535-5D76-48F7-B23F-F7693953A2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4158D535-5D76-48F7-B23F-F7693953A2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4158D535-5D76-48F7-B23F-F7693953A2A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D853B59D-DCF4-4CC8-985A-F4897D66DE44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D853B59D-DCF4-4CC8-985A-F4897D66DE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D853B59D-DCF4-4CC8-985A-F4897D66DE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D853B59D-DCF4-4CC8-985A-F4897D66DE44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,5 +78,7 @@ Global
 		{77275428-D525-4C7A-A5A9-DC6D17FC7DA5} = {9CCCEC78-715F-4C81-9E7B-FD9C3115DC36}
 		{63D555E0-08FF-4FC0-AFB9-8F03243E8A1A} = {455D97C4-478C-4CD4-9DDA-FC75DAFD18C5}
 		{5E099D47-4A7A-496A-B51A-52026B8CE966} = {455D97C4-478C-4CD4-9DDA-FC75DAFD18C5}
+		{4158D535-5D76-48F7-B23F-F7693953A2A7} = {06FE43F6-0851-43A1-BB76-DB8CF0C9E42A}
+		{D853B59D-DCF4-4CC8-985A-F4897D66DE44} = {06FE43F6-0851-43A1-BB76-DB8CF0C9E42A}
 	EndGlobalSection
 EndGlobal

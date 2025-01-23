@@ -2,5 +2,6 @@
 {
 	public class ReservaRestauranteException : SystemException
 	{
+		public ReservaRestauranteException(string message) : base(message) { }
 	}
 }

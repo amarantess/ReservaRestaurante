@@ -23,7 +23,12 @@ namespace ReservaRestaurante.API.Filters
 
 		private static void HandleProjectException(ExceptionContext context)
 		{
-			if(context.Exception is ErrorOnValidationException exception)
+			if (context.Exception is InvalidLoginException)
+			{
+				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+				context.Result = new UnauthorizedObjectResult(new ResponseError(context.Exception.Message));
+			}
+			else if (context.Exception is ErrorOnValidationException exception)
 			{
 				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 				context.Result = new BadRequestObjectResult(new ResponseError(exception.ErrorMessages));

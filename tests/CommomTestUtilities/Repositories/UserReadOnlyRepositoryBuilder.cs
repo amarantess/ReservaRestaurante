@@ -1,4 +1,5 @@
 ﻿using Moq;
+using ReservaRestaurante.Domain.Entities;
 using ReservaRestaurante.Domain.Repositories.User;
 
 namespace CommomTestUtilities.Repositories
@@ -12,6 +13,11 @@ namespace CommomTestUtilities.Repositories
 		public void ExistUserWithEmail(string email)
 		{
 			_repository.Setup(repository => repository.ExistUserWithEmail(email)).ReturnsAsync(true);
+		}
+
+		public void GetByEmailAndPassword(User user)
+		{
+			_repository.Setup(repository => repository.GetByEmailAndPassword(user.Email, user.Password)).ReturnsAsync(user);
 		}
 
 		public IUserReadOnlyRepository Build() => _repository.Object;

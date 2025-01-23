@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReservaRestaurante.Application.Services.AutoMapper;
 using ReservaRestaurante.Application.Services.Criptography;
+using ReservaRestaurante.Application.UseCases.Login.DoLogin;
 using ReservaRestaurante.Application.UseCases.User.Register;
 
 namespace ReservaRestaurante.Application
@@ -25,6 +26,7 @@ namespace ReservaRestaurante.Application
 		private static void AddUseCases(IServiceCollection services)
 		{
 			services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+			services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 		}
 
 		private static void AddPasswordEncripter(IServiceCollection services)

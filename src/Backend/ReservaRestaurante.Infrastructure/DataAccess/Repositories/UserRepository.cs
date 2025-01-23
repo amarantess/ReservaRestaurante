@@ -13,5 +13,13 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 		public async Task Add(User user) => await _dbContext.Users.AddAsync(user);
 
 		public async Task<bool> ExistUserWithEmail(string email) => await _dbContext.Users.AnyAsync(user => user.Email.Equals(email));
+
+		public async Task<User?> GetByEmailAndPassword(string email, string password)
+		{
+			return await _dbContext
+				.Users
+				.AsNoTracking() // Esse método é utilizado quando não queremos atualizar alguma informação no contexto
+				.FirstOrDefaultAsync(user => user.Email.Equals(email) && user.Password.Equals(password));
+		}
 	}
 }

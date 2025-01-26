@@ -4,9 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReservaRestaurante.Domain.Repositories;
 using ReservaRestaurante.Domain.Repositories.User;
+using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Infrastructure.DataAccess;
 using ReservaRestaurante.Infrastructure.DataAccess.Repositories;
 using ReservaRestaurante.Infrastructure.Extensions;
+using ReservaRestaurante.Infrastructure.Security.Tokens.Access.Generator;
+using ReservaRestaurante.Infrastructure.Security.Tokens.Access.Validator;
 using System.Reflection;
 
 namespace ReservaRestaurante.Infrastructure
@@ -16,6 +19,7 @@ namespace ReservaRestaurante.Infrastructure
 		public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
 		{
 			AddRepositories(services);
+			AddTokens(services, configuration);
 
 			if (configuration.IsUnitTestEnviroment())
 			{
@@ -55,6 +59,15 @@ namespace ReservaRestaurante.Infrastructure
 				.WithGlobalConnectionString(connectionString)
 				.ScanIn(Assembly.Load("ReservaRestaurante.Infrastructure")).For.All();
 			});
+		}
+
+		private static void AddTokens(IServiceCollection services, IConfiguration configuration)
+		{
+			var expirationTimeMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpirationMinutes");
+			var signingKey = configuration.GetValue<string>("Settings:Jwt:SigningKey");
+
+			services.AddScoped<IAccessTokenGenerator>(option => new JwtTokenGenerator(expirationTimeMinutes, signingKey!));
+			services.AddScoped<IAccessTokenValidator>(option => new JwtTokenValidator(signingKey!));
 		}
 	}
 }

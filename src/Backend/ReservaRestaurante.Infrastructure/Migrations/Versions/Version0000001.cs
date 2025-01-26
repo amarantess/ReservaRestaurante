@@ -11,7 +11,8 @@ namespace ReservaRestaurante.Infrastructure.Migrations.Versions
 				.WithColumn("Name").AsString(255).NotNullable()
 				.WithColumn("Email").AsString(255).NotNullable()
 				.WithColumn("Password").AsString(2000).NotNullable()
-				.WithColumn("Role").AsString(50).NotNullable();
+				.WithColumn("Role").AsString(50).NotNullable()
+				.WithColumn("UserIdentifier").AsGuid().NotNullable();
 		}
 	}
 }

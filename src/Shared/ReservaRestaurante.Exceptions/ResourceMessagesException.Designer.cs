@@ -106,6 +106,15 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request don&apos;t have token..
+        /// </summary>
+        public static string NO_TOKEN {
+            get {
+                return ResourceManager.GetString("NO_TOKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password must be longer than 6 characters..
         /// </summary>
         public static string PASSWORD_INVALID {
@@ -120,6 +129,15 @@ namespace ReservaRestaurante.Exceptions {
         public static string UNKNOW_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOW_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can&apos;t access this resource..
+        /// </summary>
+        public static string USER_WITHOUT_PERMISSION_ACCESS_RESOURCE {
+            get {
+                return ResourceManager.GetString("USER_WITHOUT_PERMISSION_ACCESS_RESOURCE", resourceCulture);
             }
         }
     }

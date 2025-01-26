@@ -14,6 +14,8 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 
 		public async Task<bool> ExistUserWithEmail(string email) => await _dbContext.Users.AnyAsync(user => user.Email.Equals(email));
 
+		public async Task<bool> ExistUserWithIdentifier(Guid userIdentifier) => await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier));
+
 		public async Task<User?> GetByEmailAndPassword(string email, string password)
 		{
 			return await _dbContext

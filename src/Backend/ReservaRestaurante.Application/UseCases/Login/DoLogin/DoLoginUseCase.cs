@@ -2,6 +2,7 @@
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 using ReservaRestaurante.Domain.Repositories.User;
+using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Exceptions.ExceptionsBase;
 
 namespace ReservaRestaurante.Application.UseCases.Login.DoLogin
@@ -10,11 +11,16 @@ namespace ReservaRestaurante.Application.UseCases.Login.DoLogin
 	{
 		private readonly IUserReadOnlyRepository _repository;
 		private readonly PasswordEncripter _passwordEncripter;
+		private readonly IAccessTokenGenerator _accessTokenGenerator;
 
-		public DoLoginUseCase(IUserReadOnlyRepository repository, PasswordEncripter passwordEncripter)
+		public DoLoginUseCase(
+			IUserReadOnlyRepository repository, 
+			IAccessTokenGenerator accessTokenGenerator,
+			PasswordEncripter passwordEncripter)
 		{
 			_repository = repository;
 			_passwordEncripter = passwordEncripter;
+			_accessTokenGenerator = accessTokenGenerator;
 		}
 
 		public async Task<ResponseRegisteredUser> Execute(RequestLogin request)
@@ -27,7 +33,11 @@ namespace ReservaRestaurante.Application.UseCases.Login.DoLogin
 
 			return new ResponseRegisteredUser
 			{
-				Name = user.Name
+				Name = user.Name,
+				Tokens = new ResponseToken
+				{
+					AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+				}
 			};
 		}
 	}

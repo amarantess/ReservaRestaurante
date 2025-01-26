@@ -2,6 +2,7 @@
 using CommomTestUtilities.Mapper;
 using CommomTestUtilities.Repositories;
 using CommomTestUtilities.Requests;
+using CommomTestUtilities.Tokens;
 using FluentAssertions;
 using ReservaRestaurante.Application.UseCases.User.Register;
 using ReservaRestaurante.Domain.Repositories.User;
@@ -25,7 +26,9 @@ namespace UseCases.Test.User.Register
 
 			//Assert
 			result.Should().NotBeNull();
+			result.Tokens.Should().NotBeNull();
 			result.Name.Should().Be(request.Name);
+			result.Tokens.AccessToken.Should().NotBeNullOrEmpty();
 		}
 
 		[Fact]
@@ -68,11 +71,12 @@ namespace UseCases.Test.User.Register
 			var unitOfWork = UnitOfWorkBuilder.Build();
 			var mapper = MapperBuilder.Build();
 			var passwordEncripter = PasswordEncripterBuilder.Build();
+			var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
 
-			if(string.IsNullOrEmpty(email) == false)
+			if (string.IsNullOrEmpty(email) == false)
 				readRepositoryBuilder.ExistUserWithEmail(email);
 
-			return new RegisterUserUseCase(writeRepository, readRepositoryBuilder.Build(), unitOfWork, mapper, passwordEncripter);
+			return new RegisterUserUseCase(writeRepository, readRepositoryBuilder.Build(), unitOfWork, mapper, accessTokenGenerator, passwordEncripter);
 		}
 	}
 }

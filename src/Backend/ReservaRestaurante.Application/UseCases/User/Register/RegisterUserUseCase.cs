@@ -6,6 +6,7 @@ using ReservaRestaurante.Communication.Responses;
 using ReservaRestaurante.Domain.Entities;
 using ReservaRestaurante.Domain.Repositories;
 using ReservaRestaurante.Domain.Repositories.User;
+using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Exceptions;
 using ReservaRestaurante.Exceptions.ExceptionsBase;
 using ReservaRestaurante.Infrastructure.DataAccess;
@@ -18,6 +19,7 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 		private readonly IUserReadOnlyRepository _readOnlyRepository;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
+		private readonly IAccessTokenGenerator _accessTokenGenerator;
 		private readonly PasswordEncripter _passwordEncripter;
 
 		public RegisterUserUseCase(
@@ -25,11 +27,13 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			IUserReadOnlyRepository readOnlyRepository,
 			IUnitOfWork unitOfWork,
 			IMapper mapper,
+			IAccessTokenGenerator accessTokenGenerator,
 			PasswordEncripter passwordEncripter)
 		{
 			_writeOnlyRepository = writeOnlyRepository;
 			_readOnlyRepository = readOnlyRepository;
 			_mapper = mapper;
+			_accessTokenGenerator = accessTokenGenerator;
 			_passwordEncripter = passwordEncripter;
 			_unitOfWork = unitOfWork;
 		}
@@ -45,6 +49,9 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			// Criptografar senha
 			user.Password = _passwordEncripter.Encrypt(request.Password);
 
+			// Gera um identificador único
+			user.UserIdentifier = Guid.NewGuid();
+
 			// Adicionar no DB
 			await _writeOnlyRepository.Add(user);
 
@@ -54,6 +61,10 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			return new ResponseRegisteredUser
 			{
 				Name = user.Name,
+				Tokens = new ResponseToken
+				{
+					AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+				}
 			};
 		}
 

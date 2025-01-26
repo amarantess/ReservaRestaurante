@@ -2,6 +2,7 @@
 using CommomTestUtilities.Entities;
 using CommomTestUtilities.Repositories;
 using CommomTestUtilities.Requests;
+using CommomTestUtilities.Tokens;
 using FluentAssertions;
 using ReservaRestaurante.Application.UseCases.Login.DoLogin;
 using ReservaRestaurante.Communication.Requests;
@@ -29,7 +30,9 @@ namespace UseCases.Test.Login.DoLogin
 
 			//Assert
 			result.Should().NotBeNull();
+			result.Tokens.Should().NotBeNull();
 			result.Name.Should().NotBeNullOrWhiteSpace().And.Be(user.Name);
+			result.Tokens.AccessToken.Should().NotBeNullOrEmpty();
 		}
 
 		[Fact]
@@ -51,11 +54,12 @@ namespace UseCases.Test.Login.DoLogin
 		{
 			var readRepositoryBuilder = new UserReadOnlyRepositoryBuilder();
 			var passwordEncripter = PasswordEncripterBuilder.Build();
+			var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
 
 			if (user is not null)
 				readRepositoryBuilder.GetByEmailAndPassword(user);
 
-			return new DoLoginUseCase(readRepositoryBuilder.Build(), passwordEncripter);
+			return new DoLoginUseCase(readRepositoryBuilder.Build(), accessTokenGenerator, passwordEncripter);
 		}
 	}
 }

@@ -39,8 +39,11 @@ namespace WebApi.Test
 				});
 		}
 
+		public string GetName() => _user.Name;
 		public string GetEmail() => _user.Email;
 		public string GetPassword() => _password;
+
+		public Guid GetUserIdentifier() => _user.UserIdentifier;
 
 		private void StartDatabase(ReservaRestauranteDbContext dbContext)
 		{

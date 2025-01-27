@@ -9,7 +9,7 @@ using ReservaRestaurante.Communication.Responses;
 
 namespace ReservaRestaurante.API.Controllers
 {
-	[Route("usuarios")]
+	[Route("users")]
 	[ApiController]
 	public class UserController : ControllerBase
 	{

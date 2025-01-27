@@ -17,7 +17,7 @@ namespace WebApi.Test.User.Register
 		{
 			var request = RequestRegisterUserBuilder.Build();
 
-			var response = await _httpClient.PostAsJsonAsync("usuarios/registrar", request);
+			var response = await _httpClient.PostAsJsonAsync("users/register", request);
 
 			response.StatusCode.Should().Be(HttpStatusCode.Created);
 		}

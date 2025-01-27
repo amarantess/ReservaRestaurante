@@ -1,7 +1,9 @@
 using Microsoft.OpenApi.Models;
 using ReservaRestaurante.API.Converters;
 using ReservaRestaurante.API.Filters;
+using ReservaRestaurante.API.Token;
 using ReservaRestaurante.Application;
+using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Infrastructure;
 using ReservaRestaurante.Infrastructure.Extensions;
 using ReservaRestaurante.Infrastructure.Migration;
@@ -49,6 +51,9 @@ builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)))
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

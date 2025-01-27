@@ -2,6 +2,7 @@
 using ReservaRestaurante.Application.Services.AutoMapper;
 using ReservaRestaurante.Application.Services.Criptography;
 using ReservaRestaurante.Application.UseCases.Login.DoLogin;
+using ReservaRestaurante.Application.UseCases.User.Profile;
 using ReservaRestaurante.Application.UseCases.User.Register;
 
 namespace ReservaRestaurante.Application
@@ -27,6 +28,7 @@ namespace ReservaRestaurante.Application
 		{
 			services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
 			services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
+			services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
 		}
 
 		private static void AddPasswordEncripter(IServiceCollection services)

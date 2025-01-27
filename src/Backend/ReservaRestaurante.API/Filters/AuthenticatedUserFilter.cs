@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
+using ReservaRestaurante.Communication.Responses;
 using ReservaRestaurante.Domain.Repositories.User;
 using ReservaRestaurante.Domain.Security.Tokens;
-using ReservaRestaurante.Exceptions.ExceptionsBase;
 using ReservaRestaurante.Exceptions;
-using ReservaRestaurante.Communication.Responses;
+using ReservaRestaurante.Exceptions.ExceptionsBase;
 
 namespace ReservaRestaurante.API.Filters
 {

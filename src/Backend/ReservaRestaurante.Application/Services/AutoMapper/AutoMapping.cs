@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ReservaRestaurante.Communication.Requests;
+using ReservaRestaurante.Communication.Responses;
 using ReservaRestaurante.Domain.Entities;
 
 namespace ReservaRestaurante.Application.Services.AutoMapper
@@ -9,12 +10,18 @@ namespace ReservaRestaurante.Application.Services.AutoMapper
 		public AutoMapping()
 		{
 			RequestToDomain();
+			DomainToResponse();
 		}
 
 		private void RequestToDomain()
 		{
 			CreateMap<RequestRegisterUser, User>()
 				.ForMember(dest => dest.Password, options => options.Ignore());
+		}
+
+		private void DomainToResponse()
+		{
+			CreateMap<User, ResponseUserProfile>();
 		}
 	}
 }

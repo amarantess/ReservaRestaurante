@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReservaRestaurante.API.Attributes;
 using ReservaRestaurante.Application.UseCases.User.Profile;
 using ReservaRestaurante.Application.UseCases.User.Register;
+using ReservaRestaurante.Application.UseCases.User.Update;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 
@@ -32,6 +33,19 @@ namespace ReservaRestaurante.API.Controllers
 			var result = await useCase.Execute();
 
 			return Ok(result);
+		}
+
+		[HttpPut("update")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+		[AuthenticatedUser]
+		public async Task<IActionResult> Update(
+			[FromServices] IUpdateUserUseCase useCase,
+			[FromBody] RequestUpdateUser request)
+		{
+			await useCase.Execute(request);
+
+			return NoContent();
 		}
 	}
 }

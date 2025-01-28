@@ -4,6 +4,7 @@ using ReservaRestaurante.Application.Services.Criptography;
 using ReservaRestaurante.Application.UseCases.Login.DoLogin;
 using ReservaRestaurante.Application.UseCases.User.Profile;
 using ReservaRestaurante.Application.UseCases.User.Register;
+using ReservaRestaurante.Application.UseCases.User.Update;
 
 namespace ReservaRestaurante.Application
 {
@@ -29,6 +30,7 @@ namespace ReservaRestaurante.Application
 			services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
 			services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 			services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
+			services.AddScoped<IUpdateUserUseCase,  UpdateUserUseCase>();
 		}
 
 		private static void AddPasswordEncripter(IServiceCollection services)

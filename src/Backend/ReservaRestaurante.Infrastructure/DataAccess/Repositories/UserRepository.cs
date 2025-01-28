@@ -4,7 +4,7 @@ using ReservaRestaurante.Domain.Repositories.User;
 
 namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 {
-	public class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository
+	public class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository, IUserUpdateOnlyRepository
 	{
 		private readonly ReservaRestauranteDbContext _dbContext;
 
@@ -23,5 +23,14 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 				.AsNoTracking() // Esse método é utilizado quando não queremos atualizar alguma informação no contexto
 				.FirstOrDefaultAsync(user => user.Email.Equals(email) && user.Password.Equals(password));
 		}
+
+		public async Task<User> GetById(long id)
+		{
+			return await _dbContext
+				.Users // Não pode ter a função AsNoTracking por que vamos atualizar alguma informação
+				.FirstAsync(user => user.Id == id);
+		}
+
+		public void Update(User user) => _dbContext.Users.Update(user);
 	}
 }

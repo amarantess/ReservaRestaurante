@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ReservaRestaurante.Application.SharedValidators;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Exceptions;
 
@@ -14,8 +15,8 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			RuleFor(u => u.Email)
 				.NotEmpty().WithMessage(ResourceMessagesException.EMAIL_EMPTY);
 
-			RuleFor(u => u.Password.Length)
-				.GreaterThanOrEqualTo(6).WithMessage(ResourceMessagesException.PASSWORD_INVALID);
+			RuleFor(u => u.Password)
+				.SetValidator(new PasswordValidator<RequestRegisterUser>());
 
 			When(user => !string.IsNullOrEmpty(user.Email), () =>
 			{

@@ -15,16 +15,19 @@ namespace ReservaRestaurante.Application.UseCases.User.Update
 		private readonly IUserUpdateOnlyRepository _userUpdateOnlyRepository;
 		private readonly IUserReadOnlyRepository _userReadOnlyRepository;
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IMapper _mapper;
 
 		public UpdateUserUseCase(
 			ILoggedUser loggedUser,
 			IUserUpdateOnlyRepository userUpdateOnlyRepository,
 			IUserReadOnlyRepository userReadOnlyRepository,
+			IMapper mapper,
 			IUnitOfWork unitOfWork)
 		{
 			_loggedUser = loggedUser;
 			_userUpdateOnlyRepository = userUpdateOnlyRepository;
 			_userReadOnlyRepository = userReadOnlyRepository;
+			_mapper = mapper;
 			_unitOfWork = unitOfWork;
 		}
 
@@ -36,8 +39,7 @@ namespace ReservaRestaurante.Application.UseCases.User.Update
 
 			var user = await _userUpdateOnlyRepository.GetById(loggedUser.Id); // Busco o usuário no banco de dados
 
-			user.Name = request.Name;
-			user.Email = request.Email;
+			_mapper.Map(request, user);
 
 			_userUpdateOnlyRepository.Update(user);
 

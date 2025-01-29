@@ -4,11 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReservaRestaurante.Domain.Repositories;
 using ReservaRestaurante.Domain.Repositories.User;
+using ReservaRestaurante.Domain.Security.Cryptography;
 using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Domain.Services.LoggedUser;
 using ReservaRestaurante.Infrastructure.DataAccess;
 using ReservaRestaurante.Infrastructure.DataAccess.Repositories;
 using ReservaRestaurante.Infrastructure.Extensions;
+using ReservaRestaurante.Infrastructure.Security.Cryptography;
 using ReservaRestaurante.Infrastructure.Security.Tokens.Access.Generator;
 using ReservaRestaurante.Infrastructure.Security.Tokens.Access.Validator;
 using ReservaRestaurante.Infrastructure.Services;
@@ -20,6 +22,7 @@ namespace ReservaRestaurante.Infrastructure
 	{
 		public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
 		{
+			AddPasswordEncripter(services);
 			AddRepositories(services);
 			AddLoggedUser(services);
 			AddTokens(services, configuration);
@@ -74,5 +77,10 @@ namespace ReservaRestaurante.Infrastructure
 		}
 
 		private static void AddLoggedUser(IServiceCollection services) => services.AddScoped<ILoggedUser, LoggedUser>();
+
+		private static void AddPasswordEncripter(IServiceCollection services)
+		{
+			services.AddScoped<IPasswordEncripter>(option => new Encripter());
+		}
 	}
 }

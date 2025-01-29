@@ -1,9 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿using ReservaRestaurante.Domain.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace ReservaRestaurante.Application.Services.Criptography
+namespace ReservaRestaurante.Infrastructure.Security.Cryptography
 {
-	public class PasswordEncripter
+	public class Encripter : IPasswordEncripter
 	{
 		public string Encrypt(string password)
 		{

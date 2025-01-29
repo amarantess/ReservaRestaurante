@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
-using ReservaRestaurante.Application.Services.AutoMapper;
-using ReservaRestaurante.Application.Services.Criptography;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
-using ReservaRestaurante.Domain.Entities;
 using ReservaRestaurante.Domain.Repositories;
 using ReservaRestaurante.Domain.Repositories.User;
+using ReservaRestaurante.Domain.Security.Cryptography;
 using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Exceptions;
 using ReservaRestaurante.Exceptions.ExceptionsBase;
-using ReservaRestaurante.Infrastructure.DataAccess;
 
 namespace ReservaRestaurante.Application.UseCases.User.Register
 {
@@ -20,7 +17,7 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 		private readonly IAccessTokenGenerator _accessTokenGenerator;
-		private readonly PasswordEncripter _passwordEncripter;
+		private readonly IPasswordEncripter _passwordEncripter;
 
 		public RegisterUserUseCase(
 			IUserWriteOnlyRepository writeOnlyRepository,
@@ -28,7 +25,7 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			IUnitOfWork unitOfWork,
 			IMapper mapper,
 			IAccessTokenGenerator accessTokenGenerator,
-			PasswordEncripter passwordEncripter)
+			IPasswordEncripter passwordEncripter)
 		{
 			_writeOnlyRepository = writeOnlyRepository;
 			_readOnlyRepository = readOnlyRepository;

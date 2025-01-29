@@ -1,7 +1,7 @@
-﻿using ReservaRestaurante.Application.Services.Criptography;
-using ReservaRestaurante.Communication.Requests;
+﻿using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 using ReservaRestaurante.Domain.Repositories.User;
+using ReservaRestaurante.Domain.Security.Cryptography;
 using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Exceptions.ExceptionsBase;
 
@@ -10,13 +10,13 @@ namespace ReservaRestaurante.Application.UseCases.Login.DoLogin
 	public class DoLoginUseCase : IDoLoginUseCase
 	{
 		private readonly IUserReadOnlyRepository _repository;
-		private readonly PasswordEncripter _passwordEncripter;
+		private readonly IPasswordEncripter _passwordEncripter;
 		private readonly IAccessTokenGenerator _accessTokenGenerator;
 
 		public DoLoginUseCase(
 			IUserReadOnlyRepository repository, 
 			IAccessTokenGenerator accessTokenGenerator,
-			PasswordEncripter passwordEncripter)
+			IPasswordEncripter passwordEncripter)
 		{
 			_repository = repository;
 			_passwordEncripter = passwordEncripter;

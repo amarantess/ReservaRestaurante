@@ -1,9 +1,10 @@
-﻿using ReservaRestaurante.Application.Services.Criptography;
+﻿using ReservaRestaurante.Domain.Security.Cryptography;
+using ReservaRestaurante.Infrastructure.Security.Cryptography;
 
 namespace CommomTestUtilities.Cryptography
 {
 	public class PasswordEncripterBuilder
 	{
-		public static PasswordEncripter Build() => new PasswordEncripter();
+		public static IPasswordEncripter Build() => new Encripter();
 	}
 }

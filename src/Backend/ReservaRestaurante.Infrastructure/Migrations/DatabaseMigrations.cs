@@ -55,9 +55,9 @@ namespace ReservaRestaurante.Infrastructure.Migration
 					new
 					{
 						createdOn = user.CreatedOn,
-						name = user.GetName(configuration),
-						email = user.GetEmail(configuration),
-						password = user.GetPassword(configuration),
+						name = AdminUserCreated.GetName(configuration),
+						email = AdminUserCreated.GetEmail(configuration),
+						password = AdminUserCreated.GetPassword(configuration),
 						role = user.Role,
 						userIdentifier = user.UserIdentifier
 					});

@@ -3,7 +3,8 @@ using ReservaRestaurante.API.Filters;
 
 namespace ReservaRestaurante.API.Attributes
 {
-	public class AuthenticatedUserAttribute : TypeFilterAttribute
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+	public sealed class AuthenticatedUserAttribute : TypeFilterAttribute
 	{
 		public AuthenticatedUserAttribute() : base(typeof(AuthenticatedUserFilter))
 		{

@@ -9,7 +9,7 @@ namespace ReservaRestaurante.Infrastructure.Security.Cryptography
 		public string Encrypt(string password)
 		{
 			var bytes = Encoding.UTF8.GetBytes(password);
-			var hashBytes = SHA512.HashData(bytes);
+			SHA512.HashData(bytes);
 
 			return StringBytes(bytes);
 		}

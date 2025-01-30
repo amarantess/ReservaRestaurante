@@ -85,7 +85,7 @@ void MigrateDatabase()
 
     var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
-    DatabaseMigrations.Migrate(connectionString, serviceScope.ServiceProvider);
+    DatabaseMigrations.Migrate(connectionString, serviceScope.ServiceProvider, builder.Configuration);
 }
 
 public partial class Program

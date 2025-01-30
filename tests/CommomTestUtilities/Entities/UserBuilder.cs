@@ -10,14 +10,14 @@ namespace CommomTestUtilities.Entities
 		{
 			var passwordEncripter = PasswordEncripterBuilder.Build();
 
-			var password = new Faker().Internet.Password();
+			var password = new Faker().Internet.Password(); // Crio uma senha antes de ser criptografada
 
 			var user =  new Faker<User>()
 				.RuleFor(user => user.Id, () => 1)
 				.RuleFor(user => user.Name, (f) => f.Person.FirstName)
 				.RuleFor(user => user.Email, (f, user) => f.Internet.Email(user.Name))
 				.RuleFor(user => user.UserIdentifier, _ => Guid.NewGuid())
-				.RuleFor(user => user.Password, (f) => passwordEncripter.Encrypt(password));
+				.RuleFor(user => user.Password, (f) => passwordEncripter.Encrypt(password)); // A senha já existente eu criptografo e guardo na variavel usuário
 
 			return (user, password);
 		}

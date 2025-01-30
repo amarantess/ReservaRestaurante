@@ -7,8 +7,6 @@ using FluentAssertions;
 using ReservaRestaurante.Application.UseCases.User.Update;
 using ReservaRestaurante.Exceptions;
 using ReservaRestaurante.Exceptions.ExceptionsBase;
-using ReservaRestaurante.Infrastructure.Services;
-using System.Reflection;
 
 namespace UseCases.Test.User.Update
 {

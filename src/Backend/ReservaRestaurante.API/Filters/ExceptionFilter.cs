@@ -33,6 +33,11 @@ namespace ReservaRestaurante.API.Filters
 				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 				context.Result = new BadRequestObjectResult(new ResponseError(exception.ErrorMessages));
 			}
+			else if (context.Exception is UserAlreadyAdmException)
+			{
+				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+				context.Result = new BadRequestObjectResult(new ResponseError(context.Exception.Message));
+			}
 		}
 
 		private static void ThrowUnknowException(ExceptionContext context)

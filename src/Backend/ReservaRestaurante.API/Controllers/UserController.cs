@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReservaRestaurante.API.Attributes;
 using ReservaRestaurante.Application.UseCases.User.ChangePassword;
 using ReservaRestaurante.Application.UseCases.User.Profile;
+using ReservaRestaurante.Application.UseCases.User.Promote;
 using ReservaRestaurante.Application.UseCases.User.Register;
 using ReservaRestaurante.Application.UseCases.User.Update;
 using ReservaRestaurante.Communication.Requests;
@@ -56,6 +57,20 @@ namespace ReservaRestaurante.API.Controllers
 		public async Task<IActionResult> ChangePassword(
 			[FromServices]IChangePasswordUseCase useCase,
 			[FromBody]RequestChangePassword request)
+		{
+			await useCase.Execute(request);
+
+			return NoContent();
+		}
+
+		[HttpPut("promote")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
+		[AuthenticatedUser]
+		[AuthenticatedAdmin]
+		public async Task<IActionResult> PromoteUser(
+			[FromServices]IPromoteUserUseCase useCase,
+			[FromBody]RequestPromoteUser request)
 		{
 			await useCase.Execute(request);
 

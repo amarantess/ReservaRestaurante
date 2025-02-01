@@ -147,6 +147,12 @@
   <data name="UNKNOW_ERROR" xml:space="preserve">
     <value>Unknown error.</value>
   </data>
+  <data name="USER_ALREADY_ADM" xml:space="preserve">
+    <value>User is already an administrator.</value>
+  </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>User not found.</value>
+  </data>
   <data name="USER_WITHOUT_PERMISSION_ACCESS_RESOURCE" xml:space="preserve">
     <value>You can't access this resource.</value>
   </data>

@@ -151,6 +151,24 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User is already an administrator..
+        /// </summary>
+        public static string USER_ALREADY_ADM {
+            get {
+                return ResourceManager.GetString("USER_ALREADY_ADM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not found..
+        /// </summary>
+        public static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can&apos;t access this resource..
         /// </summary>
         public static string USER_WITHOUT_PERMISSION_ACCESS_RESOURCE {

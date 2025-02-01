@@ -12,9 +12,13 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 
 		public async Task Add(User user) => await _dbContext.Users.AddAsync(user);
 
+		public async Task<bool> ExistAdminWithIdentifier(Guid userIdentifier) => await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Role.Equals("Administrator"));
+
 		public async Task<bool> ExistUserWithEmail(string email) => await _dbContext.Users.AnyAsync(user => user.Email.Equals(email));
 
 		public async Task<bool> ExistUserWithIdentifier(Guid userIdentifier) => await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier));
+
+		public async Task<User> GetByEmail(string email) => await _dbContext.Users.FirstAsync(user => user.Email == email);
 
 		public async Task<User?> GetByEmailAndPassword(string email, string password)
 		{
@@ -32,5 +36,7 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 		}
 
 		public void Update(User user) => _dbContext.Users.Update(user);
+
+		public async Task<bool> UserIsAdmin(User user) => await _dbContext.Users.AnyAsync(u => u.Role == "Administrator" && u.Role == user.Role);
 	}
 }

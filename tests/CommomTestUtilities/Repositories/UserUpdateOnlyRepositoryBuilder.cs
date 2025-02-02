@@ -16,6 +16,12 @@ namespace CommomTestUtilities.Repositories
 			return this;
 		}
 
+		public UserUpdateOnlyRepositoryBuilder GetByEmail(User user)
+		{
+			_repository.Setup(x => x.GetByEmail(user.Email)).ReturnsAsync(user);
+			return this;
+		}
+
 		public IUserUpdateOnlyRepository Build() => _repository.Object;
 	}
 }

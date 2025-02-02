@@ -20,6 +20,11 @@ namespace CommomTestUtilities.Repositories
 			_repository.Setup(repository => repository.GetByEmailAndPassword(user.Email, user.Password)).ReturnsAsync(user);
 		}
 
+		public void UserIsAdmin(User user)
+		{
+			_repository.Setup(repository => repository.UserIsAdmin(user)).ReturnsAsync(true);
+		}
+
 		public IUserReadOnlyRepository Build() => _repository.Object;
 	}
 }

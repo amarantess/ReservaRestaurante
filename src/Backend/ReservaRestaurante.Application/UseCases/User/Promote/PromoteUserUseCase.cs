@@ -53,8 +53,8 @@ namespace ReservaRestaurante.Application.UseCases.User.Promote
 
 			var result = validator.Validate(request);
 
-			var emailExist = await _userReadOnlyRepository.ExistUserWithEmail(request.Email); // Existe algum usuário com este email?
-			if (!emailExist)
+			var userExist = await _userReadOnlyRepository.ExistUserWithEmail(request.Email); // Existe algum usuário com este email?
+			if (!userExist)
 			{
 				result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.USER_NOT_FOUND));
 			}

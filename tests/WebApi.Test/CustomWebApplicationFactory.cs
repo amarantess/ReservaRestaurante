@@ -48,6 +48,7 @@ namespace WebApi.Test
 		private void StartDatabase(ReservaRestauranteDbContext dbContext)
 		{
 			(_user, _password) = UserBuilder.Build();
+			_user.Role = "Administrator";
 
 			dbContext.Add(_user);
 

@@ -142,6 +142,33 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The table capacity cannot be less than 1..
+        /// </summary>
+        public static string TABLE_CAPACITY_INVALID {
+            get {
+                return ResourceManager.GetString("TABLE_CAPACITY_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The table number already registered..
+        /// </summary>
+        public static string TABLE_NUMBER_ALREADY_REGISTERED {
+            get {
+                return ResourceManager.GetString("TABLE_NUMBER_ALREADY_REGISTERED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The table number cannot be less than 1..
+        /// </summary>
+        public static string TABLE_NUMBER_INVALID {
+            get {
+                return ResourceManager.GetString("TABLE_NUMBER_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown error..
         /// </summary>
         public static string UNKNOW_ERROR {

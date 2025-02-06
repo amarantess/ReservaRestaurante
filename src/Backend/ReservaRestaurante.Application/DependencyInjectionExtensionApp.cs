@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReservaRestaurante.Application.Services.AutoMapper;
 using ReservaRestaurante.Application.UseCases.Login.DoLogin;
+using ReservaRestaurante.Application.UseCases.Table.Create;
 using ReservaRestaurante.Application.UseCases.User.ChangePassword;
 using ReservaRestaurante.Application.UseCases.User.Profile;
 using ReservaRestaurante.Application.UseCases.User.Promote;
@@ -33,6 +34,7 @@ namespace ReservaRestaurante.Application
 			services.AddScoped<IUpdateUserUseCase,  UpdateUserUseCase>();
 			services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
 			services.AddScoped<IPromoteUserUseCase, PromoteUserUseCase>();
+			services.AddScoped<ICreateTableUseCase, CreateTableUseCase>();
 		}
 	}
 }

@@ -19,11 +19,14 @@ namespace ReservaRestaurante.Application.Services.AutoMapper
 				.ForMember(dest => dest.Password, options => options.Ignore());
 
 			CreateMap<RequestUpdateUser, User>();
+
+			CreateMap<RequestCreateTable, Table>();
 		}
 
 		private void DomainToResponse()
 		{
 			CreateMap<User, ResponseUserProfile>();
+			CreateMap<Table, ResponseCreatedTable>();
 		}
 	}
 }

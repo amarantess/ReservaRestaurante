@@ -8,6 +8,7 @@ namespace ReservaRestaurante.Infrastructure.DataAccess
 		public ReservaRestauranteDbContext(DbContextOptions options) : base(options) { }
 
 		public DbSet<User> Users { get; set; }
+		public DbSet<Table> Table { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

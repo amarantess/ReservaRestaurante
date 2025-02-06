@@ -5,7 +5,6 @@ using CommomTestUtilities.Requests;
 using CommomTestUtilities.Tokens;
 using FluentAssertions;
 using ReservaRestaurante.Application.UseCases.User.Register;
-using ReservaRestaurante.Domain.Repositories.User;
 using ReservaRestaurante.Exceptions;
 using ReservaRestaurante.Exceptions.ExceptionsBase;
 

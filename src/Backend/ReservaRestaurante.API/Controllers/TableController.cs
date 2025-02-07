@@ -14,7 +14,7 @@ namespace ReservaRestaurante.API.Controllers
 	public class TableController : ControllerBase
 	{
 		[HttpPost]
-		[ProducesResponseType(typeof(ResponseCreatedTable), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(ResponseTable), StatusCodes.Status201Created)]
 		[AuthenticatedAdmin]
 		public async Task<IActionResult> Create(
 			[FromServices]ICreateTableUseCase useCase,

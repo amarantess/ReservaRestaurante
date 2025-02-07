@@ -5,6 +5,6 @@ namespace ReservaRestaurante.Application.UseCases.Table.Create
 {
 	public interface ICreateTableUseCase
 	{
-		public Task<ResponseCreatedTable> Execute(RequestCreateTable request);
+		public Task<ResponseTable> Execute(RequestCreateTable request);
 	}
 }

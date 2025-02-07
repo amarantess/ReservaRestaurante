@@ -28,7 +28,7 @@ namespace ReservaRestaurante.Application.UseCases.Table.Create
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<ResponseCreatedTable> Execute(RequestCreateTable request)
+		public async Task<ResponseTable> Execute(RequestCreateTable request)
 		{
 			//Validar request
 			await Validate(request);
@@ -43,7 +43,7 @@ namespace ReservaRestaurante.Application.UseCases.Table.Create
 			await _unitOfWork.Commit();
 
 			//Retornar uma resposta
-			return _mapper.Map<ResponseCreatedTable>(table);
+			return _mapper.Map<ResponseTable>(table);
 		}
 
 		private async Task Validate(RequestCreateTable request)

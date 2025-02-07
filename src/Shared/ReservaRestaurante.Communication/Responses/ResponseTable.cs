@@ -1,6 +1,6 @@
 ﻿namespace ReservaRestaurante.Communication.Responses
 {
-	public class ResponseCreatedTable
+	public class ResponseTable
 	{
 		public long Id { get; set; }
 		public DateTime CreatedOn { get; set; }

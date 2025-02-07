@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using ReservaRestaurante.API.Attributes;
 using ReservaRestaurante.Application.UseCases.Table.Create;
+using ReservaRestaurante.Application.UseCases.Table.List;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 
@@ -21,6 +23,16 @@ namespace ReservaRestaurante.API.Controllers
 			var result = await useCase.Execute(request);
 
 			return Created(string.Empty, result);
+		}
+
+		[HttpGet]
+		[ProducesResponseType(typeof(ResponseListTable), StatusCodes.Status200OK)]
+		public async Task<IActionResult> List(
+			[FromServices]IListTableUseCase useCase)
+		{
+			var result = await useCase.Execute();
+
+			return Ok(result);
 		}
 	}
 }

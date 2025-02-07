@@ -27,6 +27,7 @@ namespace ReservaRestaurante.Application.Services.AutoMapper
 		{
 			CreateMap<User, ResponseUserProfile>();
 			CreateMap<Table, ResponseCreatedTable>();
+			CreateMap<Table, ResponseListTable>();
 		}
 	}
 }

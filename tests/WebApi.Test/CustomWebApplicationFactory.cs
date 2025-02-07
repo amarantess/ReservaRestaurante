@@ -10,6 +10,7 @@ namespace WebApi.Test
 	public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 	{
 		private ReservaRestaurante.Domain.Entities.User _user = default!;
+		private ReservaRestaurante.Domain.Entities.Table _table = default!;
 		private string _password = string.Empty;
 
 		protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -50,7 +51,10 @@ namespace WebApi.Test
 			(_user, _password) = UserBuilder.Build();
 			_user.Role = "Administrator";
 
-			dbContext.Add(_user);
+			_table = TableBuilder.Build();
+
+			dbContext.Users.Add(_user);
+			dbContext.Table.Add(_table);
 
 			dbContext.SaveChanges();
 		}

@@ -13,5 +13,7 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 		public async Task Add(Table table) => await _dbContext.Table.AddAsync(table);
 
 		public async Task<bool> ExistTableWithNumber(int number) => await _dbContext.Table.AnyAsync(table => table.Number.Equals(number));
+
+		public async Task<List<Table>> ListTables() => await _dbContext.Table.ToListAsync();
 	}
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReservaRestaurante.API.Attributes;
 using ReservaRestaurante.Application.UseCases.Table.Create;
 using ReservaRestaurante.Application.UseCases.Table.List;
+using ReservaRestaurante.Application.UseCases.Table.List_Admin;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 
@@ -29,6 +30,17 @@ namespace ReservaRestaurante.API.Controllers
 		[ProducesResponseType(typeof(ResponseListTable), StatusCodes.Status200OK)]
 		public async Task<IActionResult> List(
 			[FromServices]IListTableUseCase useCase)
+		{
+			var result = await useCase.Execute();
+
+			return Ok(result);
+		}
+
+		[HttpGet("admin")]
+		[ProducesResponseType(typeof(ResponseTable), StatusCodes.Status200OK)]
+		[AuthenticatedAdmin]
+		public async Task<IActionResult> ListTablesAdmin(
+			[FromServices] IListTableAdminUseCase useCase)
 		{
 			var result = await useCase.Execute();
 

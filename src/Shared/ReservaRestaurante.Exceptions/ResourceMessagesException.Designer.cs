@@ -151,6 +151,15 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Table not found..
+        /// </summary>
+        public static string TABLE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("TABLE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The table number already registered..
         /// </summary>
         public static string TABLE_NUMBER_ALREADY_REGISTERED {
@@ -165,6 +174,15 @@ namespace ReservaRestaurante.Exceptions {
         public static string TABLE_NUMBER_INVALID {
             get {
                 return ResourceManager.GetString("TABLE_NUMBER_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The table status must be &apos;Available&apos;, &apos;Reserved&apos; or &apos;Inactive&apos;..
+        /// </summary>
+        public static string TABLE_STATUS_INVALID {
+            get {
+                return ResourceManager.GetString("TABLE_STATUS_INVALID", resourceCulture);
             }
         }
         

@@ -147,11 +147,17 @@
   <data name="TABLE_CAPACITY_INVALID" xml:space="preserve">
     <value>The table capacity cannot be less than 1.</value>
   </data>
+  <data name="TABLE_NOT_FOUND" xml:space="preserve">
+    <value>Table not found.</value>
+  </data>
   <data name="TABLE_NUMBER_ALREADY_REGISTERED" xml:space="preserve">
     <value>The table number already registered.</value>
   </data>
   <data name="TABLE_NUMBER_INVALID" xml:space="preserve">
     <value>The table number cannot be less than 1.</value>
+  </data>
+  <data name="TABLE_STATUS_INVALID" xml:space="preserve">
+    <value>The table status must be 'Available', 'Reserved' or 'Inactive'.</value>
   </data>
   <data name="UNKNOW_ERROR" xml:space="preserve">
     <value>Unknown error.</value>

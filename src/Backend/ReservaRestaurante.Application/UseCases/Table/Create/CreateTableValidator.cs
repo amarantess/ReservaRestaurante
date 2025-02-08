@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ReservaRestaurante.Application.SharedValidators;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Exceptions;
 
@@ -12,7 +13,7 @@ namespace ReservaRestaurante.Application.UseCases.Table.Create
 				.GreaterThan(0).WithMessage(ResourceMessagesException.TABLE_NUMBER_INVALID);
 
 			RuleFor(table => table.Capacity)
-				.GreaterThan(0).WithMessage(ResourceMessagesException.TABLE_CAPACITY_INVALID);
+				.SetValidator(new CapacityValidator<RequestCreateTable>());
 		}
 	}
 }

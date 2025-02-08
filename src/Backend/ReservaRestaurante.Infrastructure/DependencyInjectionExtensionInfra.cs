@@ -50,14 +50,15 @@ namespace ReservaRestaurante.Infrastructure
 
 		private static void AddRepositories(IServiceCollection services)
 		{
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 			services.AddScoped<IUserReadOnlyRepository, UserRepository>();
 			services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
 			services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
 
-			services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 			services.AddScoped<ITableReadOnlyRepository, TableRepository>();
 			services.AddScoped<ITableWriteOnlyRepository, TableRepository>();
+			services.AddScoped<ITableUpdateOnlyRepository, TableRepository>();
 		}
 
 		private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)

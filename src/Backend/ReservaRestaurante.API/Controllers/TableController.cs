@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservaRestaurante.API.Attributes;
 using ReservaRestaurante.Application.UseCases.Table.Create;
+using ReservaRestaurante.Application.UseCases.Table.Delete;
 using ReservaRestaurante.Application.UseCases.Table.List;
 using ReservaRestaurante.Application.UseCases.Table.List_Admin;
 using ReservaRestaurante.Application.UseCases.Table.Update;
@@ -58,6 +59,20 @@ namespace ReservaRestaurante.API.Controllers
 			[FromBody]RequestUpdateTable request)
 		{
 			await useCase.Execute(id, request);
+
+			return NoContent();
+		}
+
+		[HttpDelete]
+		[Route("{id}")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+		[AuthenticatedAdmin]
+		public async Task<IActionResult> Delete(
+			[FromServices]IDeleteTableUseCase useCase,
+			[FromRoute]long id)
+		{
+			await useCase.Execute(id);
 
 			return NoContent();
 		}

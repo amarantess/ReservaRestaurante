@@ -2,6 +2,7 @@
 using ReservaRestaurante.Application.Services.AutoMapper;
 using ReservaRestaurante.Application.UseCases.Login.DoLogin;
 using ReservaRestaurante.Application.UseCases.Table.Create;
+using ReservaRestaurante.Application.UseCases.Table.Delete;
 using ReservaRestaurante.Application.UseCases.Table.List;
 using ReservaRestaurante.Application.UseCases.Table.List_Admin;
 using ReservaRestaurante.Application.UseCases.Table.Update;
@@ -37,10 +38,12 @@ namespace ReservaRestaurante.Application
 			services.AddScoped<IUpdateUserUseCase,  UpdateUserUseCase>();
 			services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
 			services.AddScoped<IPromoteUserUseCase, PromoteUserUseCase>();
+
 			services.AddScoped<ICreateTableUseCase, CreateTableUseCase>();
 			services.AddScoped<IListTableUseCase, ListTableUseCase>();
 			services.AddScoped<IListTableAdminUseCase, ListTableAdminUseCase>();
 			services.AddScoped<IUpdateTableUseCase, UpdateTableUseCase>();
+			services.AddScoped<IDeleteTableUseCase, DeleteTableUseCase>();
 		}
 	}
 }

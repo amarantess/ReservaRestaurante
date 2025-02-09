@@ -1,6 +1,4 @@
-﻿using ReservaRestaurante.Domain.Entities;
-
-namespace ReservaRestaurante.Domain.Repositories.Table
+﻿namespace ReservaRestaurante.Domain.Repositories.Table
 {
 	public interface ITableReadOnlyRepository
 	{

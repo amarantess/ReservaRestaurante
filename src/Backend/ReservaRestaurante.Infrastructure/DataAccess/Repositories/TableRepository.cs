@@ -21,5 +21,12 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 		public async Task<List<Table>> ListTables() => await _dbContext.Table.ToListAsync();
 
 		public void Update(Table table) => _dbContext.Table.Update(table);
+
+		public async Task Delete(long id)
+		{
+			var table = await _dbContext.Table.FindAsync(id);
+
+			_dbContext.Table.Remove(table!);
+		}
 	}
 }

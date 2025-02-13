@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReservaRestaurante.Application.Services.AutoMapper;
+using ReservaRestaurante.Application.Services.DateTimeConverter;
 using ReservaRestaurante.Application.UseCases.Login.DoLogin;
+using ReservaRestaurante.Application.UseCases.Reservation.Create;
 using ReservaRestaurante.Application.UseCases.Table.Create;
 using ReservaRestaurante.Application.UseCases.Table.Delete;
 using ReservaRestaurante.Application.UseCases.Table.List;
@@ -20,6 +22,7 @@ namespace ReservaRestaurante.Application
 		{
 			AddAutoMapper(services);
 			AddUseCases(services);
+			AddDateTimeConverter(services);
 		}
 
 		private static void AddAutoMapper(IServiceCollection services)
@@ -44,6 +47,13 @@ namespace ReservaRestaurante.Application
 			services.AddScoped<IListTableAdminUseCase, ListTableAdminUseCase>();
 			services.AddScoped<IUpdateTableUseCase, UpdateTableUseCase>();
 			services.AddScoped<IDeleteTableUseCase, DeleteTableUseCase>();
+
+			services.AddScoped<ICreateReservationUseCase, CreateReservationUseCase>();
+		}
+
+		private static void AddDateTimeConverter(IServiceCollection services)
+		{
+			services.AddScoped<IDateTimeConverter, Converter>();
 		}
 	}
 }

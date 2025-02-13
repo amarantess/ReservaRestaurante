@@ -23,6 +23,8 @@ namespace ReservaRestaurante.Application.Services.AutoMapper
 			CreateMap<RequestCreateTable, Table>();
 
 			CreateMap<RequestUpdateTable, Table>();
+
+			CreateMap<RequestCreateReservation, Reservation>();
 		}
 
 		private void DomainToResponse()

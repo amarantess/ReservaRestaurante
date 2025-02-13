@@ -45,8 +45,8 @@ namespace UseCases.Test.Table.Update
 
 			//Assert
 			(await act.Should().ThrowAsync<ErrorOnValidationException>())
-				.Where(e => e.ErrorMessages.Count == 1 &&
-				e.ErrorMessages.Contains(ResourceMessagesException.TABLE_CAPACITY_INVALID));
+				.Where(e => e.GetErrorMessages().Count == 1 &&
+				e.GetErrorMessages().Contains(ResourceMessagesException.TABLE_CAPACITY_INVALID));
 		}
 
 		[Fact]
@@ -64,8 +64,8 @@ namespace UseCases.Test.Table.Update
 
 			//Assert
 			(await act.Should().ThrowAsync<ErrorOnValidationException>())
-				.Where(e => e.ErrorMessages.Count == 1 &&
-				e.ErrorMessages.Contains(ResourceMessagesException.TABLE_STATUS_INVALID));
+				.Where(e => e.GetErrorMessages().Count == 1 &&
+				e.GetErrorMessages().Contains(ResourceMessagesException.TABLE_STATUS_INVALID));
 		}
 
 		[Fact]
@@ -82,8 +82,8 @@ namespace UseCases.Test.Table.Update
 
 			//Assert
 			(await act.Should().ThrowAsync<ErrorOnValidationException>())
-				.Where(e => e.ErrorMessages.Count == 1 &&
-				e.ErrorMessages.Contains(ResourceMessagesException.TABLE_NOT_FOUND));
+				.Where(e => e.GetErrorMessages().Count == 1 &&
+				e.GetErrorMessages().Contains(ResourceMessagesException.TABLE_NOT_FOUND));
 		}
 
 		private static UpdateTableUseCase CreateUseCase(ReservaRestaurante.Domain.Entities.Table table, long id = 0)

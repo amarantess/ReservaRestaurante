@@ -55,8 +55,8 @@ namespace UseCases.Test.User.Promote
 			Func<Task> act = async () => await useCase.Execute(request);
 
 			await act.Should().ThrowAsync<ErrorOnValidationException>()
-				.Where(e => e.ErrorMessages.Count == 1 &&
-				e.ErrorMessages.Contains(ResourceMessagesException.USER_NOT_FOUND));
+				.Where(e => e.GetErrorMessages().Count == 1 &&
+				e.GetErrorMessages().Contains(ResourceMessagesException.USER_NOT_FOUND));
 		}
 
 		private static PromoteUserUseCase CreateUseCase(ReservaRestaurante.Domain.Entities.User user)

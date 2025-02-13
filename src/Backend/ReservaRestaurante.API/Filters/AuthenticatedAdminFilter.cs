@@ -31,7 +31,7 @@ namespace ReservaRestaurante.API.Filters
 				var exist = await _repository.ExistAdminWithIdentifier(userIdentifier); // Existe um administrador com esse identificador?
 				if (!exist)
 				{
-					throw new ReservaRestauranteException(ResourceMessagesException.USER_WITHOUT_PERMISSION_ACCESS_RESOURCE);
+					throw new UnauthorizedException(ResourceMessagesException.USER_WITHOUT_PERMISSION_ACCESS_RESOURCE);
 				}
 			}
 			catch (SecurityTokenExpiredException) // Se o token estiver expirado
@@ -56,7 +56,7 @@ namespace ReservaRestaurante.API.Filters
 			var authentication = context.HttpContext.Request.Headers.Authorization.ToString(); // Buscar o token na requisição
 			if (string.IsNullOrWhiteSpace(authentication))
 			{
-				throw new ReservaRestauranteException(ResourceMessagesException.NO_TOKEN);
+				throw new UnauthorizedException(ResourceMessagesException.NO_TOKEN);
 			}
 
 			return authentication["Bearer".Length..].Trim(); // Retorna apenas o token sem o Bearer

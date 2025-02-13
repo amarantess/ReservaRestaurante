@@ -11,9 +11,9 @@ namespace ReservaRestaurante.API.Filters
 	{
 		public void OnException(ExceptionContext context)
 		{
-			if(context.Exception is ReservaRestauranteException)
+			if(context.Exception is ReservaRestauranteException reservaRestauranteException)
 			{
-				HandleProjectException(context);
+				HandleProjectException(reservaRestauranteException, context);
 			}
 			else
 			{
@@ -21,38 +21,10 @@ namespace ReservaRestaurante.API.Filters
 			}
 		}
 
-		private static void HandleProjectException(ExceptionContext context)
+		private static void HandleProjectException(ReservaRestauranteException reservaRestauranteException, ExceptionContext context)
 		{
-			if (context.Exception is InvalidLoginException)
-			{
-				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-				context.Result = new UnauthorizedObjectResult(new ResponseError(context.Exception.Message));
-			}
-			else if (context.Exception is ErrorOnValidationException exception)
-			{
-				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-				context.Result = new BadRequestObjectResult(new ResponseError(exception.ErrorMessages));
-			}
-			else if (context.Exception is UserAlreadyAdmException)
-			{
-				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-				context.Result = new BadRequestObjectResult(new ResponseError(context.Exception.Message));
-			}
-			else if(context.Exception is NotFoundException)
-			{
-				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
-				context.Result = new NotFoundObjectResult(new ResponseError(context.Exception.Message));
-			}
-			else if(context.Exception is CapacityInvalidException)
-			{
-				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-				context.Result = new BadRequestObjectResult(new ResponseError(context.Exception.Message));
-			}
-			else if(context.Exception is TableIsNotAvailableException)
-			{
-				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-				context.Result = new BadRequestObjectResult(new ResponseError(context.Exception.Message));
-			}
+			context.HttpContext.Response.StatusCode = (int)reservaRestauranteException.GetStatusCode();
+			context.Result = new ObjectResult(new ResponseError(reservaRestauranteException.GetErrorMessages()));
 		}
 
 		private static void ThrowUnknowException(ExceptionContext context)

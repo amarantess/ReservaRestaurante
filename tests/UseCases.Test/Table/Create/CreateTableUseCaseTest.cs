@@ -38,7 +38,7 @@ namespace UseCases.Test.Table.Create
 
 			//Assert
 			(await act.Should().ThrowAsync<ErrorOnValidationException>())
-				.Where(error => error.ErrorMessages.Count == 1 && error.ErrorMessages.Contains(ResourceMessagesException.TABLE_NUMBER_ALREADY_REGISTERED));
+				.Where(error => error.GetErrorMessages().Count == 1 && error.GetErrorMessages().Contains(ResourceMessagesException.TABLE_NUMBER_ALREADY_REGISTERED));
 		}
 
 		[Fact]
@@ -55,7 +55,7 @@ namespace UseCases.Test.Table.Create
 
 			//Assert
 			(await act.Should().ThrowAsync<ErrorOnValidationException>())
-				.Where(error => error.ErrorMessages.Count == 1 && error.ErrorMessages.Contains(ResourceMessagesException.TABLE_NUMBER_INVALID));
+				.Where(error => error.GetErrorMessages().Count == 1 && error.GetErrorMessages().Contains(ResourceMessagesException.TABLE_NUMBER_INVALID));
 		}
 
 		private static CreateTableUseCase CreateUseCase(int number = 0)

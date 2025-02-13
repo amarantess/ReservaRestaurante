@@ -9,6 +9,7 @@ namespace ReservaRestaurante.Infrastructure.DataAccess
 
 		public DbSet<User> Users { get; set; }
 		public DbSet<Table> Table { get; set; }
+		public DbSet<Reservation> Reservations { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

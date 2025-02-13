@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReservaRestaurante.Domain.Repositories;
+using ReservaRestaurante.Domain.Repositories.Reservation;
 using ReservaRestaurante.Domain.Repositories.Table;
 using ReservaRestaurante.Domain.Repositories.User;
 using ReservaRestaurante.Domain.Security.Cryptography;
@@ -59,6 +60,9 @@ namespace ReservaRestaurante.Infrastructure
 			services.AddScoped<ITableReadOnlyRepository, TableRepository>();
 			services.AddScoped<ITableWriteOnlyRepository, TableRepository>();
 			services.AddScoped<ITableUpdateOnlyRepository, TableRepository>();
+
+			services.AddScoped<IReservationReadOnlyRepository,  ReservationRepository>();
+			services.AddScoped<IReservationWriteOnlyRepository, ReservationRepository>();
 		}
 
 		private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)

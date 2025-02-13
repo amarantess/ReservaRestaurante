@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DATE_TIME_FORMAT_INVALID" xml:space="preserve">
+    <value>The date and time format is invalid. Use 'MM/dd/yyyy HH:mm'.</value>
+  </data>
+  <data name="DATE_TIME_INVALID" xml:space="preserve">
+    <value>The reservation date must be in the future.</value>
+  </data>
   <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
     <value>Email already registered.</value>
   </data>
@@ -128,6 +134,9 @@
   </data>
   <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
     <value>Invalid e-mail and/or password.</value>
+  </data>
+  <data name="PEOPLE_NUMBER_INVALID" xml:space="preserve">
+    <value>There must be at least one person.</value>
   </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>The name cannot be empty.</value>
@@ -147,8 +156,14 @@
   <data name="TABLE_CAPACITY_INVALID" xml:space="preserve">
     <value>The table capacity cannot be less than 1.</value>
   </data>
+  <data name="TABLE_NOT_AVAILABLE" xml:space="preserve">
+    <value>This table is not available at the chosen time.</value>
+  </data>
   <data name="TABLE_NOT_FOUND" xml:space="preserve">
     <value>Table not found.</value>
+  </data>
+  <data name="TABLE_NOT_SUPPORT" xml:space="preserve">
+    <value>This table does not support the number of people.</value>
   </data>
   <data name="TABLE_NUMBER_ALREADY_REGISTERED" xml:space="preserve">
     <value>The table number already registered.</value>

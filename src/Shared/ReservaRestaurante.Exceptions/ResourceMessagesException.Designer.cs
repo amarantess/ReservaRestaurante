@@ -61,6 +61,24 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The date and time format is invalid. Use &apos;MM/dd/yyyy HH:mm&apos;..
+        /// </summary>
+        public static string DATE_TIME_FORMAT_INVALID {
+            get {
+                return ResourceManager.GetString("DATE_TIME_FORMAT_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The reservation date must be in the future..
+        /// </summary>
+        public static string DATE_TIME_INVALID {
+            get {
+                return ResourceManager.GetString("DATE_TIME_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email already registered..
         /// </summary>
         public static string EMAIL_ALREADY_REGISTERED {
@@ -142,6 +160,15 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There must be at least one person..
+        /// </summary>
+        public static string PEOPLE_NUMBER_INVALID {
+            get {
+                return ResourceManager.GetString("PEOPLE_NUMBER_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The table capacity cannot be less than 1..
         /// </summary>
         public static string TABLE_CAPACITY_INVALID {
@@ -151,11 +178,29 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This table is not available at the chosen time..
+        /// </summary>
+        public static string TABLE_NOT_AVAILABLE {
+            get {
+                return ResourceManager.GetString("TABLE_NOT_AVAILABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Table not found..
         /// </summary>
         public static string TABLE_NOT_FOUND {
             get {
                 return ResourceManager.GetString("TABLE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This table does not support the number of people..
+        /// </summary>
+        public static string TABLE_NOT_SUPPORT {
+            get {
+                return ResourceManager.GetString("TABLE_NOT_SUPPORT", resourceCulture);
             }
         }
         

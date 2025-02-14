@@ -26,14 +26,14 @@ namespace ReservaRestaurante.Application.UseCases.Reservation.Create
 		}
 
 		// Valida se a string é uma data válida no formato esperado
-		private bool BeValidDate(string dateStr)
+		private static bool BeValidDate(string dateStr)
 		{
 			return DateTime.TryParseExact(dateStr, "MM/dd/yyyy HH:mm",
 				CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
 		}
 
 		// Valida se a data é futura
-		private bool BeFutureDate(string dateStr)
+		private static bool BeFutureDate(string dateStr)
 		{
 			if (DateTime.TryParseExact(dateStr, "MM/dd/yyyy HH:mm",
 					CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))

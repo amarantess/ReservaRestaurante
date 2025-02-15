@@ -20,5 +20,14 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 				reservation.TableId == tableId &&
 				reservation.ReservationDate == reservationDateTime);
 		}
+
+		public async Task<List<Reservation>> ListReservations(long userId)
+		{
+			return await _dbContext.Reservations
+				.AsNoTracking()
+				.Where(r => r.UserId == userId)
+				.OrderBy(r => r.ReservationDate)
+				.ToListAsync();
+		}
 	}
 }

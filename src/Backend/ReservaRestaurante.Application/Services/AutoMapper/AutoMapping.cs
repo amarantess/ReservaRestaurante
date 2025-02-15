@@ -32,6 +32,9 @@ namespace ReservaRestaurante.Application.Services.AutoMapper
 			CreateMap<User, ResponseUserProfile>();
 			CreateMap<Table, ResponseTable>();
 			CreateMap<Table, ResponseListTable>();
+
+			CreateMap<Reservation, ResponseListReservation>()
+				.ForMember(dest => dest.ReservationDate, opt => opt.MapFrom(src => src.ReservationDate.ToString("MM/dd/yyyy HH:mm")));
 		}
 	}
 }

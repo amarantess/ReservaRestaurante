@@ -21,9 +21,7 @@ namespace ReservaRestaurante.Application.UseCases.Table.List_Admin
 			var tables = await _repository.ListTables();
 
 			//Mapear para a response
-			var response = _mapper.Map<List<ResponseTable>>(tables);
-
-			return response;
+			return _mapper.Map<List<ResponseTable>>(tables);
 		}
 	}
 }

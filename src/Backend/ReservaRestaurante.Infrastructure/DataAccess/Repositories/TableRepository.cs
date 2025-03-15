@@ -37,5 +37,17 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 		}
 
 		public async Task<Table> GetTableByNumber(int tableNumber) => await _dbContext.Table.FirstAsync(table => table.Number == tableNumber);
+
+		public async Task<List<int>> GetTablesNumber(List<Reservation> reservations)
+		{
+			var tableIds = reservations.Select(r => r.TableId).Distinct().ToList();
+
+			var tablesNumber = await _dbContext.Table
+				.Where(table => tableIds.Contains(table.Id))
+				.Select(table => table.Number)
+				.ToListAsync();
+
+			return tablesNumber;
+		}
 	}
 }

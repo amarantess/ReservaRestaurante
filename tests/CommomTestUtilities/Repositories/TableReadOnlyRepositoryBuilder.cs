@@ -30,6 +30,13 @@ namespace CommomTestUtilities.Repositories
 			_repository.Setup(x => x.IsCapacityValid(tableId, capacity)).ReturnsAsync(true);
 		}
 
+		public void GetTablesNumber(List<Reservation> reservations, List<Table> tables)
+		{
+			var tablesNumber = tables.Select(t => t.Number).Distinct().ToList();
+
+			_repository.Setup(x => x.GetTablesNumber(reservations)).ReturnsAsync(tablesNumber);
+		}
+
 		public ITableReadOnlyRepository Build() => _repository.Object;
 	}
 }

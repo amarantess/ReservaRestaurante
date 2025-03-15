@@ -7,13 +7,21 @@ namespace CommomTestUtilities.Entities
 	{
 		public static Table Build()
 		{
-			var table = new Faker<Table>()
+			return new Faker<Table>()
 				.RuleFor(table => table.Id, () => 1)
 				.RuleFor(table => table.Number, (f) => f.Random.Int(1, 20))
 				.RuleFor(table => table.Capacity, (f) => f.Random.Int(1, 20))
 				.RuleFor(table => table.Status, () => "Available");
+		}
 
-			return table;
+		public static List<Table> BuildList()
+		{
+			return new Faker<Table>()
+				.RuleFor(table => table.Id, (f) => f.Random.Int(1, 5))
+				.RuleFor(table => table.Number, (f) => f.UniqueIndex + 1)
+				.RuleFor(table => table.Capacity, (f) => f.Random.Int(1, 20))
+				.RuleFor(table => table.Status, () => "Available")
+				.Generate(5);
 		}
 	}
 }

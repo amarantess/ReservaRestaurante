@@ -5,14 +5,15 @@ namespace CommomTestUtilities.Entities
 {
     public class ReservationBuilder
     {
-        public static Reservation Build()
+        public static List<Reservation> BuildList(List<Table> tables, User user)
         {
             return new Faker<Reservation>()
-                .RuleFor(r => r.Id, () => 1)
+                .RuleFor(r => r.Id, (f) => f.Random.Int(1, 5))
                 .RuleFor(r => r.ReservationDate, (f) => f.Date.Soon(1, DateTime.UtcNow))
                 .RuleFor(r => r.Status, () => "Active")
-                .RuleFor(r => r.TableId, (f) => f.Random.Int(1, 20))
-                .RuleFor(r => r.UserId, (f) => f.Random.Int(1, 20));
+                .RuleFor(r => r.TableId, (f) => f.PickRandom(tables).Id)
+                .RuleFor(r => r.UserId, () => user.Id)
+                .Generate(5);
         }
     }
 }

@@ -186,4 +186,10 @@
   <data name="USER_WITHOUT_PERMISSION_ACCESS_RESOURCE" xml:space="preserve">
     <value>You can't access this resource.</value>
   </data>
+  <data name="RESERVATION_ALREADY_CANCELED" xml:space="preserve">
+    <value>Reservation already canceled.</value>
+  </data>
+  <data name="RESERVATION_NOT_FOUND" xml:space="preserve">
+    <value>Reservation not found.</value>
+  </data>
 </root>

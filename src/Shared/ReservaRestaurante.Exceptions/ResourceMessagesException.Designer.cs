@@ -169,6 +169,24 @@ namespace ReservaRestaurante.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reservation already canceled..
+        /// </summary>
+        public static string RESERVATION_ALREADY_CANCELED {
+            get {
+                return ResourceManager.GetString("RESERVATION_ALREADY_CANCELED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reservation not found..
+        /// </summary>
+        public static string RESERVATION_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("RESERVATION_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The table capacity cannot be less than 1..
         /// </summary>
         public static string TABLE_CAPACITY_INVALID {

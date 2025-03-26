@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ReservaRestaurante.Domain.Entities;
 using ReservaRestaurante.Infrastructure.DataAccess;
 
 namespace WebApi.Test
@@ -11,6 +12,7 @@ namespace WebApi.Test
 	{
 		private ReservaRestaurante.Domain.Entities.User _user = default!;
 		private ReservaRestaurante.Domain.Entities.Table _table = default!;
+		private ReservaRestaurante.Domain.Entities.Reservation _reservation = default!;
 		private string _password = string.Empty;
 
 		protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -52,9 +54,11 @@ namespace WebApi.Test
 			_user.Role = "Administrator";
 
 			_table = TableBuilder.Build();
+			_reservation = ReservationBuilder.Build(_table, _user);
 
 			dbContext.Users.Add(_user);
 			dbContext.Table.Add(_table);
+			dbContext.Reservations.Add(_reservation);
 
 			dbContext.SaveChanges();
 		}

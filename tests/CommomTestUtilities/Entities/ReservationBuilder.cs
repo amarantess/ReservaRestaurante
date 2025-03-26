@@ -15,5 +15,19 @@ namespace CommomTestUtilities.Entities
                 .RuleFor(r => r.UserId, () => user.Id)
                 .Generate(5);
         }
+
+        public static Reservation Build(Table table, User user)
+        {
+            return new Faker<Reservation>()
+                .RuleFor(r => r.Id, (f) => f.Random.Int(1, 5))
+                .RuleFor(r => r.ReservationDate, (f) =>
+                {
+                    var date = f.Date.Soon(1, DateTime.UtcNow);
+                    return new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, DateTimeKind.Utc);
+				})
+                .RuleFor(r => r.Status, () => "Active")
+                .RuleFor(r => r.TableId, () => table.Id)
+                .RuleFor(r => r.UserId, () => user.Id);
+		}
     }
 }

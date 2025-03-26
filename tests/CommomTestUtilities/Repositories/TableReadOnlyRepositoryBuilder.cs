@@ -37,6 +37,11 @@ namespace CommomTestUtilities.Repositories
 			_repository.Setup(x => x.GetTablesNumber(reservations)).ReturnsAsync(tablesNumber);
 		}
 
+		public void GetTableIdByNumber(int tableNumber, Table table)
+		{
+			_repository.Setup(x => x.GetTableIdByNumber(tableNumber)).ReturnsAsync(table.Id);
+		}
+
 		public ITableReadOnlyRepository Build() => _repository.Object;
 	}
 }

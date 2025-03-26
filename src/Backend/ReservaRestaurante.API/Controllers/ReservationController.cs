@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservaRestaurante.API.Attributes;
+using ReservaRestaurante.Application.UseCases.Reservation.Cancel;
 using ReservaRestaurante.Application.UseCases.Reservation.Create;
 using ReservaRestaurante.Application.UseCases.Reservation.List;
 using ReservaRestaurante.Communication.Requests;
@@ -30,6 +31,18 @@ namespace ReservaRestaurante.API.Controllers
 			var result = await useCase.Execute();
 
 			return Ok(result);
+		}
+
+		[HttpPatch]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> Cancel(
+			[FromServices]ICancelReservationUseCase useCase,
+			[FromBody]RequestCancelReservation request)
+		{
+			await useCase.Execute(request);
+
+			return NoContent();
 		}
 	}
 }

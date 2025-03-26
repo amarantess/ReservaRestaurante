@@ -49,5 +49,14 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 
 			return tablesNumber;
 		}
+
+		public async Task<long> GetTableIdByNumber(int tableNumber)
+		{
+			return await _dbContext.Table
+				.AsNoTracking()
+				.Where(t => t.Number.Equals(tableNumber))
+				.Select(t => t.Id)
+				.FirstAsync();
+		}
 	}
 }

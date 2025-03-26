@@ -8,5 +8,6 @@
 		public Task<bool> IsCapacityValid(long tableId, int capacity);
 		public Task<Entities.Table> GetTableByNumber(int tableNumber);
 		public Task<List<int>> GetTablesNumber(List<Entities.Reservation> reservations);
+		public Task<long> GetTableIdByNumber(int tableNumber);
 	}
 }

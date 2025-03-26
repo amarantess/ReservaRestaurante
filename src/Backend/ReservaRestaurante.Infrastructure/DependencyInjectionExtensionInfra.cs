@@ -63,6 +63,7 @@ namespace ReservaRestaurante.Infrastructure
 
 			services.AddScoped<IReservationReadOnlyRepository,  ReservationRepository>();
 			services.AddScoped<IReservationWriteOnlyRepository, ReservationRepository>();
+			services.AddScoped<IReservationUpdateOnlyRepository, ReservationRepository>();
 		}
 
 		private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)

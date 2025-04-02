@@ -47,9 +47,7 @@ namespace ReservaRestaurante.Application.UseCases.User.ChangePassword
 		{
 			var result = new ChangePasswordValidator().Validate(request);
 
-			var currentPasswordEncripter = _passwordEncripter.Encrypt(request.Password); // Criptografa a senha que veio da request
-
-			if (!currentPasswordEncripter.Equals(loggedUser.Password)) // Se a senha atual for diferente da passada na request
+			if (!_passwordEncripter.IsValid(request.Password, loggedUser.Password)) // Se a senha atual for diferente da passada na request
 			{
 				result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.PASSWORD_DIFFERENT_CURRENT_PASSWORD));
 			}

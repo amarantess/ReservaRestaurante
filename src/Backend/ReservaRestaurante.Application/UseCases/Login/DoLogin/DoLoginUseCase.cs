@@ -25,11 +25,10 @@ namespace ReservaRestaurante.Application.UseCases.Login.DoLogin
 
 		public async Task<ResponseRegisteredUser> Execute(RequestLogin request)
 		{
-			//Criptografa a senha recebida
-			var encriptedPassword = _passwordEncripter.Encrypt(request.Password);
+			var user = await _repository.GetByEmailReadOnly(request.Email);
 
-			//Compara as informações                                                           //Se o que estiver a esquerda dos "??" for nulo, irá executar o que estiver a direita.
-			var user = await _repository.GetByEmailAndPassword(request.Email, encriptedPassword) ?? throw new InvalidLoginException();
+			if(user is null || !_passwordEncripter.IsValid(request.Password, user.Password))
+				throw new InvalidLoginException();
 
 			return new ResponseRegisteredUser
 			{

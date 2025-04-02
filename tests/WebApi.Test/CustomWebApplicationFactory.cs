@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ReservaRestaurante.Domain.Entities;
 using ReservaRestaurante.Infrastructure.DataAccess;
 
 namespace WebApi.Test

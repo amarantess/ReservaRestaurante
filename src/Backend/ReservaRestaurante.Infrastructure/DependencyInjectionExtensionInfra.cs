@@ -91,7 +91,7 @@ namespace ReservaRestaurante.Infrastructure
 
 		private static void AddPasswordEncripter(IServiceCollection services)
 		{
-			services.AddScoped<IPasswordEncripter>(option => new Encripter());
+			services.AddScoped<IPasswordEncripter, BCryptNet>();
 		}
 	}
 }

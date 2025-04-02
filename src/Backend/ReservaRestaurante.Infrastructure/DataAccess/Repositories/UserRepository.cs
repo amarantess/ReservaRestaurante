@@ -20,12 +20,12 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 
 		public async Task<User> GetByEmail(string email) => await _dbContext.Users.FirstAsync(user => user.Email == email);
 
-		public async Task<User?> GetByEmailAndPassword(string email, string password)
+		public async Task<User?> GetByEmailReadOnly(string email)
 		{
 			return await _dbContext
-				.Users
-				.AsNoTracking() // Esse método é utilizado quando não queremos atualizar alguma informação no contexto
-				.FirstOrDefaultAsync(user => user.Email.Equals(email) && user.Password.Equals(password));
+			.Users
+			.AsNoTracking()
+			.FirstOrDefaultAsync(user => user.Email.Equals(email));
 		}
 
 		public async Task<User> GetById(long id)

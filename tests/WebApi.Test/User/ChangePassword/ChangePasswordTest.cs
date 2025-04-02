@@ -16,8 +16,8 @@ namespace WebApi.Test.User.ChangePassword
 
 		public ChangePasswordTest(CustomWebApplicationFactory factory)
 		{
-			_password = factory.GetPassword();
 			_httpClient = factory.CreateClient();
+			_password = factory.GetPassword();
 			_userIdentifier = factory.GetUserIdentifier();
 		}
 

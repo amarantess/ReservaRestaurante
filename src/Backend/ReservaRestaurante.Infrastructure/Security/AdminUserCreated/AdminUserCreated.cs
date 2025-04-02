@@ -16,7 +16,7 @@ namespace ReservaRestaurante.Infrastructure.Security.AdminUserCreated
 		public static string GetPassword(IConfiguration configuration)
 		{
 			var password = configuration.GetValue<string>("Settings:User:Password");
-			var encryptedPassword = new Encripter().Encrypt(password!);
+			var encryptedPassword = new BCryptNet().Encrypt(password!);
 			return encryptedPassword;
 		}
 	}

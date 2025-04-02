@@ -15,9 +15,9 @@ namespace CommomTestUtilities.Repositories
 			_repository.Setup(repository => repository.ExistUserWithEmail(email)).ReturnsAsync(true);
 		}
 
-		public void GetByEmailAndPassword(User user)
+		public void GetByEmailReadOnly(User user)
 		{
-			_repository.Setup(repository => repository.GetByEmailAndPassword(user.Email, user.Password)).ReturnsAsync(user);
+			_repository.Setup(repository => repository.GetByEmailReadOnly(user.Email)).ReturnsAsync(user);
 		}
 
 		public void UserIsAdmin(User user)

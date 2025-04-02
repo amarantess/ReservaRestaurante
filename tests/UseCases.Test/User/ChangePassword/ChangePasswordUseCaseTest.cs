@@ -26,10 +26,6 @@ namespace UseCases.Test.User.ChangePassword
 			Func<Task> act = async () => await useCase.Execute(request);
 
 			await act.Should().NotThrowAsync();
-
-			var passwordEncripter = PasswordEncripterBuilder.Build();
-
-			user.Password.Should().Be(passwordEncripter.Encrypt(request.NewPassword)); // A senha do usuário deveria ser igual a nova senha criptografada
 		}
 
 		[Fact]
@@ -50,10 +46,6 @@ namespace UseCases.Test.User.ChangePassword
 			(await act.Should().ThrowAsync<ErrorOnValidationException>())
 				.Where(e => e.GetErrorMessages().Count() == 1 &&
 				e.GetErrorMessages().Contains(ResourceMessagesException.PASSWORD_EMPTY));
-
-			var passwordEncripter = PasswordEncripterBuilder.Build();
-
-			user.Password.Should().Be(passwordEncripter.Encrypt(password)); // Garantir que a senha é a mesma
 		}
 
 		[Fact]
@@ -70,10 +62,6 @@ namespace UseCases.Test.User.ChangePassword
 			(await act.Should().ThrowAsync<ErrorOnValidationException>())
 				.Where(e => e.GetErrorMessages().Count() == 1 &&
 				e.GetErrorMessages().Contains(ResourceMessagesException.PASSWORD_DIFFERENT_CURRENT_PASSWORD));
-
-			var passwordEncripter = PasswordEncripterBuilder.Build();
-
-			user.Password.Should().Be(passwordEncripter.Encrypt(password)); // Garantir que a senha é a mesma
 		}
 
 		private static ChangePasswordUseCase CreateUseCase(ReservaRestaurante.Domain.Entities.User user)

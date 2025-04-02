@@ -31,7 +31,7 @@ namespace WebApi.Test.Reservation.Cancel
 
 			AuthorizeRequest(token);
 
-			var response = await _httpClient.PatchAsJsonAsync("reservation", request);
+			var response = await _httpClient.PatchAsJsonAsync("reservation/cancel", request);
 
 			response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 		}
@@ -48,7 +48,7 @@ namespace WebApi.Test.Reservation.Cancel
 
 			AuthorizeRequest(token);
 
-			var response = await _httpClient.PatchAsJsonAsync("reservation", request);
+			var response = await _httpClient.PatchAsJsonAsync("reservation/cancel", request);
 
 			response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 		}

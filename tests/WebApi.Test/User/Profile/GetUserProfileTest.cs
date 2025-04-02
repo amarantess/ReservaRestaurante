@@ -31,7 +31,7 @@ namespace WebApi.Test.User.Profile
 
 			AuthorizeRequest(token);
 
-			var response = await _httpClient.GetAsync("users/get/profile");
+			var response = await _httpClient.GetAsync("users/profile");
 
 			response.StatusCode.Should().Be(HttpStatusCode.OK);
 

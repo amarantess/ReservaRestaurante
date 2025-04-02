@@ -27,7 +27,7 @@ namespace ReservaRestaurante.API.Controllers
 			return Created(string.Empty ,result);
 		}
 
-		[HttpGet("get/profile")]
+		[HttpGet("profile")]
 		[ProducesResponseType(typeof(ResponseUserProfile), StatusCodes.Status200OK)]
 		[AuthenticatedUser]
 		public async Task<IActionResult> GetUserProfile([FromServices]IGetUserProfileUseCase useCase)

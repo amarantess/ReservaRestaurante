@@ -33,7 +33,7 @@ namespace ReservaRestaurante.API.Controllers
 			return Ok(result);
 		}
 
-		[HttpPatch]
+		[HttpPatch("cancel")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(typeof(ResponseError), StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Cancel(

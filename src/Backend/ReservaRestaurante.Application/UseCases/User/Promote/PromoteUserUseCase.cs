@@ -25,25 +25,12 @@ namespace ReservaRestaurante.Application.UseCases.User.Promote
 
 		public async Task Execute(RequestPromoteUser request)
 		{
-			// Validar
 			await Validate(request);
 
-			// Recupera o usuário
 			var user  = await _userUpdateOnlyRepository.GetByEmail(request.Email);
-
-			// Usuário já é um adm? || readOnly
-			var isAdmin = await _userReadOnlyRepository.UserIsAdmin(user);
-			if (isAdmin)
-			{
-				throw new UserAlreadyAdmException();
-			}
-
-			// Atualizar role
 			user.Role = "Administrator";
 
 			_userUpdateOnlyRepository.Update(user);
-
-			// Salvar
 			await _unitOfWork.Commit();
 		}
 
@@ -53,10 +40,17 @@ namespace ReservaRestaurante.Application.UseCases.User.Promote
 
 			var result = validator.Validate(request);
 
-			var userExist = await _userReadOnlyRepository.ExistUserWithEmail(request.Email); // Existe algum usuário com este email?
+			var userExist = await _userReadOnlyRepository.ExistUserWithEmail(request.Email);
 			if (!userExist)
 			{
 				result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.USER_NOT_FOUND));
+			}
+			else
+			{
+				var user = await _userUpdateOnlyRepository.GetByEmail(request.Email);
+				var isAdmin = await _userReadOnlyRepository.UserIsAdmin(user);
+				if (isAdmin)
+					result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.USER_ALREADY_ADM));
 			}
 
 			if (!result.IsValid)

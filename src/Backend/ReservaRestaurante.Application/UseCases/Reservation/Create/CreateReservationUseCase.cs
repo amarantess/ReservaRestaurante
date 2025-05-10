@@ -1,4 +1,5 @@
-﻿using ReservaRestaurante.Application.Services.DateTimeConverter;
+﻿using FluentValidation.Results;
+using ReservaRestaurante.Application.Services.DateTimeConverter;
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 using ReservaRestaurante.Domain.Repositories;
@@ -37,29 +38,10 @@ namespace ReservaRestaurante.Application.UseCases.Reservation.Create
 
 		public async Task<ResponseCreatedReservation> Execute(RequestCreateReservation request)
 		{
-			//Validar
-			await Validate(request);
+			(var table, var dateConverted) = await Validate(request);
 
-			//Recuperar usuário
 			var loggedUser = await _loggedUser.User();
 
-			// Formatar a data da request em BR
-			var dateConverted = _dateTimeConverter.ConvertStringToDateTime(request.ReservationDateTime);
-
-			//Recuperando a mesa
-			var table = await _tableReadOnlyRepository.GetTableByNumber(request.TableNumber);
-
-			//Verificar se a capacidade da mesa corresponde
-			var isValid = await _tableReadOnlyRepository.IsCapacityValid(table.Id, request.PeopleNumber);
-			if (!isValid)
-				throw new CapacityInvalidException();
-
-			//Verificar se a mesa está disponivel no horario desejado
-			var isAvailable = await _reservationReadOnlyRepository.IsTableAvailable(table.Id, dateConverted);
-			if (!isAvailable)
-				throw new TableIsNotAvailableException();
-
-			//Mapear
 			var reservation = new Domain.Entities.Reservation
 			{
 				UserId = loggedUser.Id,
@@ -67,28 +49,34 @@ namespace ReservaRestaurante.Application.UseCases.Reservation.Create
 				ReservationDate = dateConverted
 			};
 
-			//Adicionar
 			await _reservationWriteOnlyRepository.Add(reservation);
-
-			//Persistir
 			await _unitOfWork.Commit();
 
-			//Response
 			return new ResponseCreatedReservation
 			{
 				ReservationDateTime = reservation.ReservationDate
 			};
 		}
 
-		private async Task Validate(RequestCreateReservation request)
+		private async Task<(Domain.Entities.Table, DateTime dateConverted)> Validate(RequestCreateReservation request)
 		{
 			var validator = new CreateReservationValidator();
 			var result = validator.Validate(request);
 
-			//Verificar se existe uma mesa com o mesmo número da request
 			var existTable = await _tableReadOnlyRepository.ExistTableWithNumber(request.TableNumber);
 			if (!existTable)
 				throw new NotFoundException(ResourceMessagesException.TABLE_NOT_FOUND);
+
+			var isValid = await _tableReadOnlyRepository.IsCapacityValid(request.TableNumber, request.PeopleNumber);
+			if (!isValid)
+				result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.TABLE_NOT_SUPPORT));
+
+			var table = await _tableReadOnlyRepository.GetTableByNumber(request.TableNumber);
+			var dateConverted = _dateTimeConverter.ConvertStringToDateTime(request.ReservationDateTime);
+
+			var isAvailable = await _reservationReadOnlyRepository.IsTableAvailable(table.Id, dateConverted);
+			if (!isAvailable)
+				result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.TABLE_NOT_AVAILABLE));
 
 			if (!result.IsValid)
 			{
@@ -96,6 +84,8 @@ namespace ReservaRestaurante.Application.UseCases.Reservation.Create
 
 				throw new ErrorOnValidationException(errorMessages);
 			}
+
+			return (table, dateConverted);
 		}
 	}
 }

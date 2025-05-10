@@ -21,6 +21,7 @@ namespace UseCases.Test.Reservation.Create
 			(var user, _) = UserBuilder.Build();
 			var table = TableBuilder.Build();
 			var request = RequestCreateReservationBuilder.Build();
+			request.TableNumber = table.Number;
 			var useCase = CreateUseCase(user, request, table);
 
 			//Act
@@ -62,8 +63,9 @@ namespace UseCases.Test.Reservation.Create
 			Func<Task> act = async () => await useCase.Execute(request);
 
 			//Assert
-			(await act.Should().ThrowAsync<CapacityInvalidException>())
-				.Where(exception => exception.Message.Equals(ResourceMessagesException.TABLE_NOT_SUPPORT));
+			(await act.Should().ThrowAsync<ErrorOnValidationException>())
+				.Where(e => e.GetErrorMessages().Count == 1 &&
+					e.GetErrorMessages().Contains(ResourceMessagesException.TABLE_NOT_SUPPORT));
 		}
 
 		[Fact]
@@ -74,14 +76,16 @@ namespace UseCases.Test.Reservation.Create
 			var table = TableBuilder.Build();
 			table.Id = 0;
 			var request = RequestCreateReservationBuilder.Build();
+			request.TableNumber = table.Number;
 			var useCase = CreateUseCase(user, request, table);
 
 			//Act
 			Func<Task> act = async () => await useCase.Execute(request);
 
 			//Assert
-			(await act.Should().ThrowAsync<TableIsNotAvailableException>())
-				.Where(exception => exception.Message.Equals(ResourceMessagesException.TABLE_NOT_AVAILABLE));
+			(await act.Should().ThrowAsync<ErrorOnValidationException>())
+				.Where(e => e.GetErrorMessages().Count == 1 &&
+					e.GetErrorMessages().Contains(ResourceMessagesException.TABLE_NOT_AVAILABLE));
 		}
 
 		private static CreateReservationUseCase CreateUseCase(
@@ -104,7 +108,7 @@ namespace UseCases.Test.Reservation.Create
 				tableReadOnlyRepository.ExistTableWithNumber(request.TableNumber);
 
 				if (request.PeopleNumber <= 8)
-					tableReadOnlyRepository.IsCapacityValid(table.Id, request.PeopleNumber);
+					tableReadOnlyRepository.IsCapacityValid(table.Number, request.PeopleNumber);
 
 				if(table.Id != 0)
 					reservationReadOnlyRepository.IsTableAvailable(table.Id, converted);

@@ -40,7 +40,9 @@ namespace UseCases.Test.User.Promote
 
 			Func<Task> act = async () => await useCase.Execute(request);
 
-			await act.Should().ThrowAsync<UserAlreadyAdmException>();
+			await act.Should().ThrowAsync<ErrorOnValidationException>()
+				.Where(e => e.GetErrorMessages().Count == 1 &&
+				e.GetErrorMessages().Contains(ResourceMessagesException.USER_ALREADY_ADM));
 		}
 
 		[Fact]

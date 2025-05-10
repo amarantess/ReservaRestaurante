@@ -29,11 +29,11 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 			_dbContext.Table.Remove(table!);
 		}
 
-		public async Task<bool> IsCapacityValid(long tableId, int capacity)
+		public async Task<bool> IsCapacityValid(int tableNumber, int capacity)
 		{
 			return await _dbContext.Table.
 				AsNoTracking().
-				AnyAsync(table => table.Id == tableId && table.Capacity >= capacity);
+				AnyAsync(table => table.Number == tableNumber && table.Capacity >= capacity);
 		}
 
 		public async Task<Table> GetTableByNumber(int tableNumber) => await _dbContext.Table.FirstAsync(table => table.Number == tableNumber);

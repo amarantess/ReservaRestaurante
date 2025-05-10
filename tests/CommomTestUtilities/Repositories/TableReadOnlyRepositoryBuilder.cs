@@ -25,9 +25,9 @@ namespace CommomTestUtilities.Repositories
 			_repository.Setup(x => x.GetTableByNumber(tableNumber)).ReturnsAsync(table);
 		}
 
-		public void IsCapacityValid(long tableId, int capacity)
+		public void IsCapacityValid(int tableNumber, int capacity)
 		{
-			_repository.Setup(x => x.IsCapacityValid(tableId, capacity)).ReturnsAsync(true);
+			_repository.Setup(x => x.IsCapacityValid(tableNumber, capacity)).ReturnsAsync(true);
 		}
 
 		public void GetTablesNumber(List<Reservation> reservations, List<Table> tables)

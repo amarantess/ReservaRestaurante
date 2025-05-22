@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using ReservaRestaurante.API.BackgroundServices;
 using ReservaRestaurante.API.Converters;
 using ReservaRestaurante.API.Filters;
 using ReservaRestaurante.API.Token;
@@ -56,6 +57,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddHostedService<DeleteUserService>();
 
 var app = builder.Build();
 

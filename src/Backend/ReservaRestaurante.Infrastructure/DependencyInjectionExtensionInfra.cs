@@ -1,4 +1,5 @@
-﻿using FluentMigrator.Runner;
+﻿using Azure.Messaging.ServiceBus;
+using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,13 +10,15 @@ using ReservaRestaurante.Domain.Repositories.User;
 using ReservaRestaurante.Domain.Security.Cryptography;
 using ReservaRestaurante.Domain.Security.Tokens;
 using ReservaRestaurante.Domain.Services.LoggedUser;
+using ReservaRestaurante.Domain.Services.ServiceBus;
 using ReservaRestaurante.Infrastructure.DataAccess;
 using ReservaRestaurante.Infrastructure.DataAccess.Repositories;
 using ReservaRestaurante.Infrastructure.Extensions;
 using ReservaRestaurante.Infrastructure.Security.Cryptography;
 using ReservaRestaurante.Infrastructure.Security.Tokens.Access.Generator;
 using ReservaRestaurante.Infrastructure.Security.Tokens.Access.Validator;
-using ReservaRestaurante.Infrastructure.Services;
+using ReservaRestaurante.Infrastructure.Services.LoggedUser;
+using ReservaRestaurante.Infrastructure.Services.ServiceBus;
 using System.Reflection;
 
 namespace ReservaRestaurante.Infrastructure
@@ -28,6 +31,7 @@ namespace ReservaRestaurante.Infrastructure
 			AddRepositories(services);
 			AddLoggedUser(services);
 			AddTokens(services, configuration);
+			AddQueue(services, configuration);
 
 			if (configuration.IsUnitTestEnviroment())
 			{
@@ -56,6 +60,7 @@ namespace ReservaRestaurante.Infrastructure
 			services.AddScoped<IUserReadOnlyRepository, UserRepository>();
 			services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
 			services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
+			services.AddScoped<IUserDeleteOnlyRepository, UserRepository>();
 
 			services.AddScoped<ITableReadOnlyRepository, TableRepository>();
 			services.AddScoped<ITableWriteOnlyRepository, TableRepository>();
@@ -89,9 +94,27 @@ namespace ReservaRestaurante.Infrastructure
 
 		private static void AddLoggedUser(IServiceCollection services) => services.AddScoped<ILoggedUser, LoggedUser>();
 
-		private static void AddPasswordEncripter(IServiceCollection services)
+		private static void AddPasswordEncripter(IServiceCollection services) => services.AddScoped<IPasswordEncripter, BCryptNet>();
+
+		private static void AddQueue(IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddScoped<IPasswordEncripter, BCryptNet>();
+			var connectionString = configuration.GetValue<string>("Settings:ServiceBus:DeleteUserAccount")!;
+
+			var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
+			{
+				TransportType = ServiceBusTransportType.AmqpWebSockets
+			});
+
+			var deleteQueue = new DeleteUserQueue(client.CreateSender("user"));
+
+			var deleteUserProcessor = new DeleteUserProcessor(client.CreateProcessor("user", new ServiceBusProcessorOptions
+			{
+				MaxConcurrentCalls = 1
+			}));
+
+			services.AddSingleton(deleteUserProcessor);
+
+			services.AddScoped<IDeleteUserQueue>(options => deleteQueue);
 		}
 	}
 }

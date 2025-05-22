@@ -8,6 +8,7 @@ namespace ReservaRestaurante.Infrastructure.Security.AdminUserCreated
 		public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 		public string Role { get; set; } = "Administrator";
 		public Guid UserIdentifier { get; set; } = Guid.NewGuid();
+		public bool Active { get; set; } = true;
 
 		public static string GetName(IConfiguration configuration) => configuration.GetValue<string>("Settings:User:Name")!;
 

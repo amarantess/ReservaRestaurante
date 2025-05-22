@@ -50,8 +50,8 @@ namespace ReservaRestaurante.Infrastructure.Migration
 			if (!adminExists)
 			{
 				dbConnection.Execute(
-					@"INSERT INTO reservarestaurante.users (CreatedOn, Name, Email, Password, Role, UserIdentifier)
-                    VALUES (@createdOn, @name, @email, @password, @role, @userIdentifier)",
+					@"INSERT INTO reservarestaurante.users (CreatedOn, Name, Email, Password, Role, UserIdentifier, Active)
+                    VALUES (@createdOn, @name, @email, @password, @role, @userIdentifier, @active)",
 					new
 					{
 						createdOn = user.CreatedOn,
@@ -59,7 +59,8 @@ namespace ReservaRestaurante.Infrastructure.Migration
 						email = AdminUserCreated.GetEmail(configuration),
 						password = AdminUserCreated.GetPassword(configuration),
 						role = user.Role,
-						userIdentifier = user.UserIdentifier
+						userIdentifier = user.UserIdentifier,
+						active = user.Active
 					});
 			}
 		}

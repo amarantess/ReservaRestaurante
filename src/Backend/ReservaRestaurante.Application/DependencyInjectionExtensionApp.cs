@@ -11,6 +11,7 @@ using ReservaRestaurante.Application.UseCases.Table.List;
 using ReservaRestaurante.Application.UseCases.Table.List_Admin;
 using ReservaRestaurante.Application.UseCases.Table.Update;
 using ReservaRestaurante.Application.UseCases.User.ChangePassword;
+using ReservaRestaurante.Application.UseCases.User.Delete.Request;
 using ReservaRestaurante.Application.UseCases.User.Profile;
 using ReservaRestaurante.Application.UseCases.User.Promote;
 using ReservaRestaurante.Application.UseCases.User.Register;
@@ -43,6 +44,7 @@ namespace ReservaRestaurante.Application
 			services.AddScoped<IUpdateUserUseCase,  UpdateUserUseCase>();
 			services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
 			services.AddScoped<IPromoteUserUseCase, PromoteUserUseCase>();
+			services.AddScoped<IRequesteDeleteUserUseCase, RequesteDeleteUserUseCase>();
 
 			services.AddScoped<ICreateTableUseCase, CreateTableUseCase>();
 			services.AddScoped<IListTableUseCase, ListTableUseCase>();

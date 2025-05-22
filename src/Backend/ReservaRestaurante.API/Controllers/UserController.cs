@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ReservaRestaurante.API.Attributes;
 using ReservaRestaurante.Application.UseCases.User.ChangePassword;
+using ReservaRestaurante.Application.UseCases.User.Delete.Request;
 using ReservaRestaurante.Application.UseCases.User.Profile;
 using ReservaRestaurante.Application.UseCases.User.Promote;
 using ReservaRestaurante.Application.UseCases.User.Register;
@@ -73,6 +72,16 @@ namespace ReservaRestaurante.API.Controllers
 			[FromBody]RequestPromoteUser request)
 		{
 			await useCase.Execute(request);
+
+			return NoContent();
+		}
+
+		[HttpDelete]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[AuthenticatedUser]
+		public async Task<IActionResult> Delete([FromServices] IRequesteDeleteUserUseCase useCase)
+		{
+			await useCase.Execute();
 
 			return NoContent();
 		}

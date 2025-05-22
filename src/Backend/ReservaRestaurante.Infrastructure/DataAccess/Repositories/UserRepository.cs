@@ -4,7 +4,7 @@ using ReservaRestaurante.Domain.Repositories.User;
 
 namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 {
-	public class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository, IUserUpdateOnlyRepository
+	public class UserRepository : IUserWriteOnlyRepository, IUserReadOnlyRepository, IUserUpdateOnlyRepository, IUserDeleteOnlyRepository
 	{
 		private readonly ReservaRestauranteDbContext _dbContext;
 
@@ -12,20 +12,37 @@ namespace ReservaRestaurante.Infrastructure.DataAccess.Repositories
 
 		public async Task Add(User user) => await _dbContext.Users.AddAsync(user);
 
-		public async Task<bool> ExistAdminWithIdentifier(Guid userIdentifier) => await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Role.Equals("Administrator"));
+		public async Task DeleteAccount(Guid userIdentifier)
+		{
+			var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.UserIdentifier == userIdentifier);
+			if(user is null)
+				return;
 
-		public async Task<bool> ExistUserWithEmail(string email) => await _dbContext.Users.AnyAsync(user => user.Email.Equals(email));
+			var reservations = _dbContext.Reservations.Where(r => r.UserId == user.Id);
 
-		public async Task<bool> ExistUserWithIdentifier(Guid userIdentifier) => await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier));
+			_dbContext.Reservations.RemoveRange(reservations);
 
-		public async Task<User> GetByEmail(string email) => await _dbContext.Users.FirstAsync(user => user.Email == email);
+			_dbContext.Users.Remove(user);
+		}
+
+		public async Task<bool> ExistAdminWithIdentifier(Guid userIdentifier)
+		{
+			return await _dbContext.Users.
+				AnyAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Role.Equals("Administrator") && user.Active);
+		}
+
+		public async Task<bool> ExistUserWithEmail(string email) => await _dbContext.Users.AnyAsync(user => user.Email.Equals(email) && user.Active);
+
+		public async Task<bool> ExistUserWithIdentifier(Guid userIdentifier) => await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Active);
+
+		public async Task<User> GetByEmail(string email) => await _dbContext.Users.FirstAsync(user => user.Active && user.Email == email);
 
 		public async Task<User?> GetByEmailReadOnly(string email)
 		{
 			return await _dbContext
 			.Users
 			.AsNoTracking()
-			.FirstOrDefaultAsync(user => user.Email.Equals(email));
+			.FirstOrDefaultAsync(user => user.Active && user.Email.Equals(email));
 		}
 
 		public async Task<User> GetById(long id)

@@ -6,7 +6,7 @@ using ReservaRestaurante.Infrastructure.DataAccess;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace ReservaRestaurante.Infrastructure.Services
+namespace ReservaRestaurante.Infrastructure.Services.LoggedUser
 {
 	public class LoggedUser : ILoggedUser
 	{
@@ -34,7 +34,7 @@ namespace ReservaRestaurante.Infrastructure.Services
 			return await _dbContext
 				.Users
 				.AsNoTracking()
-				.FirstAsync(user => user.UserIdentifier == userIdentifier);
+				.FirstAsync(user => user.Active == true && user.UserIdentifier == userIdentifier);
 		}
 	}
 }

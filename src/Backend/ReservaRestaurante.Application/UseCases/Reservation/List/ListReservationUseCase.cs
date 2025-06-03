@@ -2,6 +2,7 @@
 using ReservaRestaurante.Domain.Repositories.Reservation;
 using ReservaRestaurante.Domain.Repositories.Table;
 using ReservaRestaurante.Domain.Services.LoggedUser;
+using ReservaRestaurante.Exceptions.ExceptionsBase;
 
 namespace ReservaRestaurante.Application.UseCases.Reservation.List
 {
@@ -26,6 +27,9 @@ namespace ReservaRestaurante.Application.UseCases.Reservation.List
 			var user = await _loggedUser.User();
 
 			var reservations = await _reservationReadOnlyRepository.ListReservations(user.Id);
+			if (reservations is null || !reservations.Any())
+				throw new NotFoundException("Reservations don't exist");
+
 			var tablesNumber = await _tableReadOnlyRepository.GetTablesNumber(reservations);
 			
 			return reservations.Zip(tablesNumber, (reservation, tableNumber) => new ResponseListReservation

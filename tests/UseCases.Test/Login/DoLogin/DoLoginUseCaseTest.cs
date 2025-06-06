@@ -53,13 +53,16 @@ namespace UseCases.Test.Login.DoLogin
 		private static DoLoginUseCase CreateUseCase(ReservaRestaurante.Domain.Entities.User? user = null)
 		{
 			var readRepositoryBuilder = new UserReadOnlyRepositoryBuilder();
-			var passwordEncripter = PasswordEncripterBuilder.Build();
 			var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
+			var passwordEncripter = PasswordEncripterBuilder.Build();
+			var refreshTokenGenerator = RefreshTokenGeneratorBuilder.Build();
+			var tokenRepository = new TokenRepositoryBuilder().Build();
+			var unitOfWork = UnitOfWorkBuilder.Build();
 
 			if (user is not null)
 				readRepositoryBuilder.GetByEmailReadOnly(user);
 
-			return new DoLoginUseCase(readRepositoryBuilder.Build(), accessTokenGenerator, passwordEncripter);
+			return new DoLoginUseCase(readRepositoryBuilder.Build(), accessTokenGenerator, passwordEncripter, refreshTokenGenerator, tokenRepository, unitOfWork);
 		}
 	}
 }

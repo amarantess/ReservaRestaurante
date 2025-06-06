@@ -2,6 +2,7 @@
 using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
 using ReservaRestaurante.Domain.Repositories;
+using ReservaRestaurante.Domain.Repositories.Token;
 using ReservaRestaurante.Domain.Repositories.User;
 using ReservaRestaurante.Domain.Security.Cryptography;
 using ReservaRestaurante.Domain.Security.Tokens;
@@ -18,6 +19,8 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 		private readonly IMapper _mapper;
 		private readonly IAccessTokenGenerator _accessTokenGenerator;
 		private readonly IPasswordEncripter _passwordEncripter;
+		private readonly IRefreshTokenGenerator _refreshTokenGenerator;
+		private readonly ITokenRepository _tokenRepository;
 
 		public RegisterUserUseCase(
 			IUserWriteOnlyRepository writeOnlyRepository,
@@ -25,7 +28,9 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			IUnitOfWork unitOfWork,
 			IMapper mapper,
 			IAccessTokenGenerator accessTokenGenerator,
-			IPasswordEncripter passwordEncripter)
+			IPasswordEncripter passwordEncripter,
+			IRefreshTokenGenerator refreshTokenGenerator,
+			ITokenRepository tokenRepository)
 		{
 			_writeOnlyRepository = writeOnlyRepository;
 			_readOnlyRepository = readOnlyRepository;
@@ -33,36 +38,46 @@ namespace ReservaRestaurante.Application.UseCases.User.Register
 			_accessTokenGenerator = accessTokenGenerator;
 			_passwordEncripter = passwordEncripter;
 			_unitOfWork = unitOfWork;
+			_refreshTokenGenerator = refreshTokenGenerator;
+			_tokenRepository = tokenRepository;
 		}
 
 		public async Task<ResponseRegisteredUser> Execute(RequestRegisterUser request)
 		{
-			// Validar
 			await Validate(request);
 
-			// Mapear a request em uma entidade
 			var user = _mapper.Map<Domain.Entities.User>(request);
-
-			// Criptografar senha
 			user.Password = _passwordEncripter.Encrypt(request.Password);
-
-			// Gera um identificador único
 			user.UserIdentifier = Guid.NewGuid();
 
-			// Adicionar no DB
 			await _writeOnlyRepository.Add(user);
-
-			// Persistir no DB
 			await _unitOfWork.Commit();
+
+			var refreshToken = await CreateAndSaveRefreshToken(user);
 
 			return new ResponseRegisteredUser
 			{
 				Name = user.Name,
-				Tokens = new ResponseToken
+				Tokens = new ResponseTokenJson
 				{
-					AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+					AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier),
+					RefreshToken = refreshToken
 				}
 			};
+		}
+
+		private async Task<string> CreateAndSaveRefreshToken(Domain.Entities.User user)
+		{
+			var refreshToken = new Domain.Entities.RefreshToken
+			{
+				Value = _refreshTokenGenerator.Generate(),
+				UserId = user.Id
+			};
+
+			await _tokenRepository.SaveNewRefreshToken(refreshToken);
+			await _unitOfWork.Commit();
+
+			return refreshToken.Value;
 		}
 
 		private async Task Validate(RequestRegisterUser request)

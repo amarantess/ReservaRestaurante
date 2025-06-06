@@ -1,5 +1,7 @@
 ﻿using ReservaRestaurante.Communication.Requests;
 using ReservaRestaurante.Communication.Responses;
+using ReservaRestaurante.Domain.Repositories;
+using ReservaRestaurante.Domain.Repositories.Token;
 using ReservaRestaurante.Domain.Repositories.User;
 using ReservaRestaurante.Domain.Security.Cryptography;
 using ReservaRestaurante.Domain.Security.Tokens;
@@ -12,15 +14,24 @@ namespace ReservaRestaurante.Application.UseCases.Login.DoLogin
 		private readonly IUserReadOnlyRepository _repository;
 		private readonly IPasswordEncripter _passwordEncripter;
 		private readonly IAccessTokenGenerator _accessTokenGenerator;
+		private readonly IRefreshTokenGenerator _refreshTokenGenerator;
+		private readonly ITokenRepository _tokenRepository;
+		private readonly IUnitOfWork _unitOfWork;
 
 		public DoLoginUseCase(
 			IUserReadOnlyRepository repository, 
 			IAccessTokenGenerator accessTokenGenerator,
-			IPasswordEncripter passwordEncripter)
+			IPasswordEncripter passwordEncripter,
+			IRefreshTokenGenerator refreshTokenGenerator,
+			ITokenRepository tokenRepository,
+			IUnitOfWork unitOfWork)
 		{
 			_repository = repository;
 			_passwordEncripter = passwordEncripter;
 			_accessTokenGenerator = accessTokenGenerator;
+			_refreshTokenGenerator = refreshTokenGenerator;
+			_tokenRepository = tokenRepository;
+			_unitOfWork = unitOfWork;
 		}
 
 		public async Task<ResponseRegisteredUser> Execute(RequestLogin request)
@@ -30,14 +41,31 @@ namespace ReservaRestaurante.Application.UseCases.Login.DoLogin
 			if(user is null || !_passwordEncripter.IsValid(request.Password, user.Password))
 				throw new InvalidLoginException();
 
+			var refreshToken = await CreateAndSaveRefreshToken(user);
+
 			return new ResponseRegisteredUser
 			{
 				Name = user.Name,
-				Tokens = new ResponseToken
+				Tokens = new ResponseTokenJson
 				{
-					AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+					AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier),
+					RefreshToken = refreshToken
 				}
 			};
+		}
+
+		private async Task<string> CreateAndSaveRefreshToken(Domain.Entities.User user)
+		{
+			var refreshToken = new Domain.Entities.RefreshToken
+			{
+				Value = _refreshTokenGenerator.Generate(),
+				UserId = user.Id
+			};
+
+			await _tokenRepository.SaveNewRefreshToken(refreshToken);
+			await _unitOfWork.Commit();
+
+			return refreshToken.Value;
 		}
 	}
 }

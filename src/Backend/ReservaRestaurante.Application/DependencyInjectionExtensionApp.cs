@@ -10,6 +10,7 @@ using ReservaRestaurante.Application.UseCases.Table.Delete;
 using ReservaRestaurante.Application.UseCases.Table.List;
 using ReservaRestaurante.Application.UseCases.Table.List_Admin;
 using ReservaRestaurante.Application.UseCases.Table.Update;
+using ReservaRestaurante.Application.UseCases.Token.RefreshToken;
 using ReservaRestaurante.Application.UseCases.User.ChangePassword;
 using ReservaRestaurante.Application.UseCases.User.Delete.Request;
 using ReservaRestaurante.Application.UseCases.User.Profile;
@@ -55,6 +56,8 @@ namespace ReservaRestaurante.Application
 			services.AddScoped<ICreateReservationUseCase, CreateReservationUseCase>();
 			services.AddScoped<IListReservationUseCase, ListReservationUseCase>();
 			services.AddScoped<ICancelReservationUseCase, CancelReservationUseCase>();
+
+			services.AddScoped<IUseRefreshTokenUseCase, UseRefreshTokenUseCase>();
 		}
 
 		private static void AddDateTimeConverter(IServiceCollection services)

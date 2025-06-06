@@ -34,7 +34,7 @@ namespace ReservaRestaurante.Infrastructure.Services.LoggedUser
 			return await _dbContext
 				.Users
 				.AsNoTracking()
-				.FirstAsync(user => user.Active == true && user.UserIdentifier == userIdentifier);
+				.FirstAsync(user => user.Active && user.UserIdentifier == userIdentifier);
 		}
 	}
 }

@@ -27,6 +27,9 @@ namespace WebApi.Test.Reservation.Create
 			var request = RequestCreateReservationBuilder.Build();
 			request.TableNumber = _tableNumber;
 
+			if(request.TableNumber != _tableNumber)
+				request.TableNumber = _tableNumber;
+
 			var token = JwtTokenGeneratorBuilder.Build().Generate(_userIdentifier);
 
 			AuthorizeRequest(token);

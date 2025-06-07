@@ -27,7 +27,7 @@ namespace ReservaRestaurante.Application.UseCases.Reservation.List
 			var user = await _loggedUser.User();
 
 			var reservations = await _reservationReadOnlyRepository.ListReservations(user.Id);
-			if (reservations is null || !reservations.Any())
+			if (reservations is null || reservations.Count == 0)
 				throw new NotFoundException("Reservations don't exist");
 
 			var tablesNumber = await _tableReadOnlyRepository.GetTablesNumber(reservations);

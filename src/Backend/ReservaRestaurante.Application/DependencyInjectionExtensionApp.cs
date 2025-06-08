@@ -2,6 +2,7 @@
 using ReservaRestaurante.Application.Services.AutoMapper;
 using ReservaRestaurante.Application.Services.DateTimeConverter;
 using ReservaRestaurante.Application.UseCases.Login.DoLogin;
+using ReservaRestaurante.Application.UseCases.Login.External;
 using ReservaRestaurante.Application.UseCases.Reservation.Cancel;
 using ReservaRestaurante.Application.UseCases.Reservation.Create;
 using ReservaRestaurante.Application.UseCases.Reservation.List;
@@ -58,6 +59,7 @@ namespace ReservaRestaurante.Application
 			services.AddScoped<ICancelReservationUseCase, CancelReservationUseCase>();
 
 			services.AddScoped<IUseRefreshTokenUseCase, UseRefreshTokenUseCase>();
+			services.AddScoped<IExternalLoginUseCase, ExternalLoginUseCase>();
 		}
 
 		private static void AddDateTimeConverter(IServiceCollection services)

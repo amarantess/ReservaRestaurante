@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 using ReservaRestaurante.API.BackgroundServices;
 using ReservaRestaurante.API.Converters;
@@ -58,7 +59,12 @@ builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddHostedService<DeleteUserService>();
+if (!builder.Configuration.IsUnitTestEnviroment())
+{
+	builder.Services.AddHostedService<DeleteUserService>();
+
+	AddGoogleAuthentication();
+}
 
 var app = builder.Build();
 
@@ -89,6 +95,22 @@ void MigrateDatabase()
     var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
     DatabaseMigrations.Migrate(connectionString, serviceScope.ServiceProvider, builder.Configuration);
+}
+
+void AddGoogleAuthentication()
+{
+	var clientId = builder.Configuration.GetValue<string>("Settings:Google:ClientId")!;
+	var clientSecret = builder.Configuration.GetValue<string>("Settings:Google:ClientSecret")!;
+
+	builder.Services.AddAuthentication(config =>
+	{
+		config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+	}).AddCookie()
+	.AddGoogle(googleOpt =>
+	{
+		googleOpt.ClientId = clientId;
+		googleOpt.ClientSecret = clientSecret;
+	});
 }
 
 public partial class Program

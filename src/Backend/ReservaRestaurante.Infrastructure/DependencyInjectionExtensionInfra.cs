@@ -105,6 +105,9 @@ namespace ReservaRestaurante.Infrastructure
 		{
 			var connectionString = configuration.GetValue<string>("Settings:ServiceBus:DeleteUserAccount")!;
 
+			if (string.IsNullOrEmpty(connectionString))
+				return;
+
 			var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
 			{
 				TransportType = ServiceBusTransportType.AmqpWebSockets

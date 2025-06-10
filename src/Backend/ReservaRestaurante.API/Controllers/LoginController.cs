@@ -45,7 +45,7 @@ namespace ReservaRestaurante.API.Controllers
 				var token = await useCase.Execute(name, email);
 
 				return Redirect($"{returnUrl}/{token}");
-			};
+			}
 		}
 	}
 }

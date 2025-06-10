@@ -31,7 +31,7 @@ steps:
     dockerfile: $(dockerFilePath)
     containerRegistry: $(dockerRegistryServiceConnection)
     tags: |
-      lasted
-      $(tag)layName: Build
+      latest
+      $(tag)
     
     

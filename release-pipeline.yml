@@ -28,7 +28,7 @@ steps:
   inputs:
     command: buildAndPush
     repository: $(imageRepository)
-    dockerfile: $(dockerfilePath)
+    dockerfile: $(dockerFilePath)
     containerRegistry: $(dockerRegistryServiceConnection)
     tags: |
       lasted
